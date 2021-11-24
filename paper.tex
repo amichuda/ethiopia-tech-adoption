@@ -5,6 +5,8 @@
 \usepackage{natbib}
 \bibliographystyle{rusnat}
 
+\usepackage{graphics}
+
 \usepackage[margin=1in]{geometry}
 \usepackage{setspace}
 \doublespacing
@@ -30,9 +32,16 @@ A different branch of the literature provides an alternative explanation for suc
 \section{Data}
 
 The current study uses the Ethiopia Socioeconomic Survey (ESS), a part of the Agricultural Sample Survey (AgSS), a survey 
-designed to obtain production estimates for the major crops. It was conducted in collaboration with the Central Statistics Agency of Ethiopia, the World Bank and CGIAR (Consortium of International Agricultural Research Centers) \citep{kosmowski2020shining}. The ESS is meant to be representative of the most populous regions of the country. The ESS contains several questionnaires targeted at getting an understanding of the state of agriculture. This includes a survey that is conducted post-planting and then post-harvest. These surveys are more important to our analysis as it gives a close look to inputs used in agriculture, the types of seeds used (in various levels of detail) and yields collected post-harvest. There were significant differences between the analysis carried out in ESS 1-3 and the most recent, ESS4. Most notably, the ESS4 is no longer a panel dataset made up of the households of ESS 1-3, but it includes important information on the DNA fingerprinting of seed type and misclassification rates. This is important information as the first three waves of ESS only included self-reported hybrid maize status. As a result, our main analysis will include the first three waves of the ESS and use the fourth wave later for robustness and validation.
+designed to obtain production estimates for the major crops. It was conducted in collaboration with the Central Statistics Agency of Ethiopia, the World Bank and CGIAR (Consortium of International Agricultural Research Centers) \citep{kosmowski2020shining}. The ESS is meant to be representative of the most populous regions of the country. The ESS contains several questionnaires targeted at getting an understanding of the state of agriculture. This includes a survey that is conducted post-planting and then post-harvest. These surveys are more important to our analysis as it gives a close look to inputs used in agriculture, the types of seeds used (in various levels of detail) and yields collected post-harvest. There were significant differences between the analysis carried out in ESS 1-3 and the most recent, ESS4. Most notably, the ESS4 is no longer a panel dataset made up of the households of ESS 1-3, but it includes important information on the DNA fingerprinting of seed type and misclassification rates. This is important information as the first three waves of ESS only included self-reported hybrid maize status. Since our estimation strategy requires a balanced panel dataset of maize growers, our main analysis will include the first three waves of the ESS. We use the fourth wave later for robustness and validation.
 
-Figure \ref{map:regions} shows the spatial distribution of the locations of the our households of study.
+Figure \ref{map:regions} shows the spatial distribution of the locations of the our households of study. The number of households surveyed did
+
+\begin{figure}
+    \centering
+    \includegraphics{results/figures/map_hhids.pdf}
+    \caption{Mean Spatial Distribution of Households across Ethiopia}
+    \label{map:regions}
+\end{figure}
 
 Table \ref{tbl:summary} shows a set of the summary statistics for the sample of house
 
