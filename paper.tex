@@ -8,6 +8,7 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{caption}
+\usepackage{amsmath}
 
 \usepackage{graphics}
 
@@ -52,19 +53,17 @@ Table \ref{tbl:summary} shows a set of summary statistics for our sample. The me
 
 \input{results/tables/summary}
 
-The ESS has has both self-reported 
-
-% Explain summary stats
-% different definitions of yields
-% hybrid and trajectories
+The ESS has has both self-reported and crop cut yields available. This provides two sources of yield information, although self-reported yields seem to be overly large compared to either fresh or dried crop cut yields. Self-reported yields are both more susceptible to behavioral biases, but also to confusion caused by differences in assumed units. In general, though, the sample with available yield information cuts down the available sample immensely, which limits the power of the estimation. It isn't clear whether unavailable yields numbers is due to some sort of selection or whether crop cuts were only collected randomly from a few households.
 
 \section{Estimation Strategy}
 
-Our base analysis will be inspired by the work of \citep{Suri2011-oi}. This estimation framework imposes a parametric relationship between farmers' absolute advantage (i.e., the component of productivity that is independent of technology) and their comparative advantage (i.e., their relative productivity of adopting the improved technology over not adopting). This method seeks to estimate the following equation:
+The advantage of our estimation strategy is that we do not rely on identification from an instrument or the structure of a model, but from the fact that the trajectory that a household takes in their adoption decisions through time is an informative source of identifying information. See \cite{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc} for more information on the assumptions involved for the Group Random Coefficients estimator. Table \ref{tbl:trajectories} maps out the 
 
-$$
-yit=+ hit + i+ihit + i+it
-$$
+This method seeks to estimate the following equation:
+
+\begin{align}
+y_{it}&=\sum_{\underline{h}\in\mathcal{H}\backslash (1,1)}\mu_{\underline{h}}1\{h_{i}=\underline{h}\}+\sum_{\underline{h}\in\mathcal{H}_{S}}\Delta_{\underline{h}}h_{it}1\{h_{i}=\underline{h}\}+\kappa_{(1,1)}h_{it}1\{\underline{h}=(1,1)\}+\epsilon_{it}.\label{eq:GRC}
+\end{align}
 
 where y is yields or profits for household i at time t, h is an indicator for adoption,  is a household’s absolute advantage,  is a household’s comparative advantage and  describes the gains to adopting, relative to a household’s comparative advantage. This framework provides an advantage over other methods \citep{Wooldridge1997-xj,Heckman1998-pt}. Firstly, identification does not rely on the existence of a valid instrumental variable. Instead, identification comes from a linear projection of an individual's returns to adoption onto the observed history of their adoption, an approach similar to the correlated random effects (CRE) method in \citep{Chamberlain1984-uk}. Secondly, it disentangles a household’s absolute advantage when taking part in agriculture and its comparative advantage in adopting. This is crucial in understanding the adoption decision as it is not dependent on a household’s agricultural ability, but on the gains from taking it up. We and co-authors developed this further in \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc} by proposing a more flexible and tractable approach using a group random coefficient strategy that draws on recent developments in the nonparametric panel identification literature. Our strategy has a clear economic interpretation and can elucidate potential identification concerns of the CRC model to the practitioner. It is also more easily extended to multiple time periods and new levels of heterogeneity than the CRC approach.
 
