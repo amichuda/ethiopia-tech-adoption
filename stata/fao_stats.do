@@ -15,8 +15,11 @@ keep if Value != .
 replace Value = Value/10 if Unit == "hg/ha"
 replace Value = Value/1000 if Unit == "ha"
 
-keep if Year == 2019
-adasd
+// keep if Year == 2019 
+// keep if Element == "Area harvested"
+// gsort -Value
+
+
 *** Get Ha of Maize
 keep if Item == "Maize"
 	
