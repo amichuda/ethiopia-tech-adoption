@@ -44,12 +44,27 @@
 \section{Introduction}
 
 %%% Why it is important
-Food security is a major challenge in many East African countries, and Ethiopia is no exception, having historically struggled to provide an adequate and reliable food supply \citep{Ramakrishna2002-hv, Jaleta2018-oj}. Since the drought of 1984, Ethiopia has become increasingly reliant on maize, as of today, it constitutes the most widespread crop in the country.\footnote{FAO stats data shows the total area cultivated with Maize in 2019 is 25\% larger than the one cultivated with the next most widespread crop (sorghum), and 27\% and 139\% larger than the next two following crops, wheat and Barley, respectively.} As Figure \ref{fig:maize_yields} shows, there is an upward trend in the total area cultivated with maize since 1990, with average yields that have almost doubled during this period.
+Food security is a major challenge in many East African countries, and Ethiopia is no exception, having historically struggled to provide an adequate and reliable food supply \citep{Ramakrishna2002-hv, Jaleta2018-oj}. Since the drought of 1984, Ethiopia has become increasingly reliant on maize, as of today, it constitutes the most widespread crop in the country.\footnote{FAO stats data shows the total area cultivated with Maize in 2019 is 25\% larger than the one cultivated with the next most widespread crop (sorghum), and 27\% and 139\% larger than the next two following crops, wheat and Barley, respectively.} As Figure \ref{fig:maize_yields} shows, there is an upward trend in the total area cultivated with maize since 1990, with average yields that have almost doubled during this period. These increases in yields have had enormous consequences in decreasing undernourishment, as its prevalence has dramatically decreased from from 47\% of the population in 2001 to 14\% in 2018 (The World Bank, 2021). Despite such generalized progress, food insecurity remains affecting more than half the population of Ethiopia (The World Bank, 2021), which already speaks about the heterogeneous progress across subpopulations\footnote{The country has also recently seen increases in food insecurity because of COVID-19, the conflict in Ethiopia’s Tigray region and the desert locust outbreak}.   
+
+The large disparities in yields and food security between the African continent and the rest of the developing world are often attributed to different adoption rates of green revolution technologies, such as improved seeds. Evidence has shown that the adoption of improved seeds leads to increases in agricultural yields (\citep{Carter2014-fm}), food security (\citep{Shiferaw2014-op}), and poverty reduction (\citep{Minten2008-tj}). Although critics of green revolution technologies have also claimed that these technological packages have not been as profitable for farmers in Africa as promised, given the high costs of improved seeds compared to the gains in productivity    
+
+
+Evidence has shown that the adoption of improved seed leads to increases in agricultural yields \citep{Carter2014-fm}, food security \citep{Shiferaw2014-op} and poverty reduction \citep{Minten2008-tj}. Despite such positive impacts, the low adoption levels of improved seeds varieties in Sub-Saharan Africa remains a puzzle. 
+
 
 %%%%% The puzzle 
-Despite numerous technological breakthroughs in maize germplasm with increased yields and drought tolerance, adoption of improved seeds has remained a challenge, with only 13\% of maize farmers consistently using improved seeds varieties, and the lion share of farmers (62\%) not using improved seeds at all during the period where data is available. Moreover, there is a large percentage of farmers who adopt new varieties inconsistently limiting their opportunities to learn about their benefits, see Table \ref{tbl:Trajectories}. 
+Despite numerous technological breakthroughs in maize germplasm with increased yields and drought tolerance, adoption of improved seeds has remained a challenge, with only 13\% of maize farmers consistently using improved seeds varieties, and the lion share of farmers (62\%) not using improved seeds at all during the period where data is available. Moreover, there is a large percentage of farmers who adopt new varieties inconsistently limiting their opportunities to learn about their benefits, see Table \ref{tbl:Trajectories}.  Evidence has shown that the adoption of improved seed leads to increases in agricultural yields \citep{Carter2014-fm}, food security \citep{Shiferaw2014-op} and poverty reduction \citep{Minten2008-tj}. Despite such positive impacts, the low adoption levels of improved seeds varieties in Sub-Saharan Africa remains a puzzle. 
+
 
 The facts sub-Saharan farmers continue to use traditional farming techniques when more modern, higher-return agricultural technologies are available remains an empirical puzzle where several answers have been proposed. These include imperfections in credit markets \citep{Croppenstedt2003-pq}, property rights \citep{Place2000-el}, social learning \citep{Conley2010-ue,Foster1995-bz,Munshi2004-og}, lack of commitment devices \cite{Duflo2009-iv}, and high transportation costs that increase the cost of agricultural inputs \citep{Byerlee2013-qk}. This issue is becoming more important as even current varieties of improved seed are over 20 years old and their effectiveness in terms of yield improvement and disease resistance is waning \citep{Abate2015-rj}. 
+
+
+Multiple explanations have been proposed for observed adoption rates, including the type of technology promotion mechanisms used by governments, NGO’s, and businesses, the characteristics of the improved seeds and their adaptation to specific agro-climatic environments \citep{Bird2020-nt}, as well as growing conditions, such as the type of soil, input use, and other farmer characteristics \citep{Munshi2004-og}. The consensus in this literature is that the success of improved varieties depends on a range of factors that need to be better understood. Success of improved seeds should be accompanied by complementary conditions and inputs that would allow the full potential of these varieties to be realized. Specifically, extension services and on-farm field trials, seed variety characteristics and rainfall have been found to be crucial to the adoption of improved maize in Tanzania \citep{Kaliba2000-jh}. In the specific case of Ethiopia, labor, fertilizer use, farmers’ experience with extension packages, rainfall suitability and prices have been shown to increase the opportunity cost of not adopting improved wheat varieties \citep{Wale2006-bv}. Market access and the accessibility of extension services are also critical in the adoption of improved chickpea varieties in Ethiopia \citep{Verkaart2019-ol}. Other important determinants of heterogeneous effects include risk aversion \citep{Holden2016-vy}, farm size \citep{Ghimire2015-bd}, and credit constraints \citep{Simtowe2008-jn,Balana2020-hx}.
+
+A different branch of the literature provides an alternative explanation for such low adoption rates, focusing on heterogeneous potential returns to adoption \citep{Suri2011-oi}. This literature suggests that even if returns to adoption are high, farmers may fail to adopt if they face low comparative advantage to adoption. Other methods used in the literature fail to account for this heterogeneity, admitting only the presence of time-constant and/or time-varying unobserved heterogeneities (depending on the data structure) for identification purposes \citep{Kassie2018-xn,Falco2011-rt}. These methods ignore the possibility of a farmer’s comparative advantage of using an improved technology over a traditional one as playing a central role in their adoption decision. 
+
+
+We rely on Suri’s method and its extension in \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc} to account for such heterogeneous comparative advantages and evaluate how these are explained by climatic conditions. In Ethiopia, rainfall deviations from historical averages are found to be the main driver of heterogeneous effects for adopting agronomic packages \citep{Marenya2020-kb}. Similar experiences from Malawi show exposure to past droughts is found to increase the adoption of drought-tolerant maize among farmers that also receive subsidies \citep{Katengeza2019-af} and the dis-adoption of traditional local maize \citep{Holden2016-vy}.
 
 %%%% Let's evaluate the effect of adoption in the context of Ethiopia
 
@@ -60,38 +75,17 @@ In our paper, we build on that literature by investigating hybrid maize seed ado
 but modelling the heterogeneity directly through a projection of their returns to adoption on their observed
 ”trajectory” of adoption. This first estimation strategy uses data from the first three survey rounds that allow us to follow the same households across time (ESS1 to ESS3). The results show returns to adoption are consistently negative, a result that runs against the careful lab development of the improved seed varieties. To expand on this results, our second estimation strategy implements an endogenous switching regressions that exploits the last round of the survey (ESS4). The latest survey round is not a a continuation of the panel of the first three rounds, but has novel data on the genetic finger prints of the seeds used, that we exploit to understand why hybrid seed varieties seem not to increase returns when adopted. Varying how strict of a definition for hybrid seeds we use, starting from second-generation and recycled (SR1), and a more strict definition, which includes only new varieties (SR2), we find that  farmers that adopted a seeds with a less pure genetic profile would have had better returns by simply not adopting. 
 
-We put together the results from both estimation strategies to suggest that the negative return to adoption we find under the Group Random Coefficients estimation reflect that relying on a loose definition of hybrid seeds
-
-
-
-
+We put together the results from both estimation strategies to suggest that the negative return to adoption we find under the Group Random Coefficients estimation reflects the loose definition of hybrid seeds, where only a subset of farmers are using the purest genetic varieties. Considering that poorer farmers are the ones paying a premium for genetically diluted hybrids, this result has several policy implication about the need to foster a more inclusive policy when helping farmers to obtain the best performing seeds. 
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics{results/figures/Maize_yields.pdf}
-    \caption{Maize: Total area harvested and Average yields}
+    \caption{Maize: Total area harvested and Average yields}    \includegraphics{results/figures/Maize_yields.pdf}
+    
     \figcaption{Source: Authors' calculations using FAO stats data
     Note: Yield means the harvested production per ha for the area under cultivation}
     \label{fig:maize_yields}
 \end{figure}
-
-
-\section{Context}
-
-Evidence has shown that the adoption of improved seed leads to increases in agricultural yields \citep{Carter2014-fm}, food security \citep{Shiferaw2014-op} and poverty reduction \citep{Minten2008-tj}. Despite such positive impacts, the low adoption levels of improved seeds varieties in Sub-Saharan Africa remains a puzzle. 
-
-
-Multiple explanations have been proposed for observed adoption rates, including the type of technology promotion mechanisms used by governments, NGO’s, and businesses, the characteristics of the improved seeds and their adaptation to specific agro-climatic environments \citep{Bird2020-nt}, as well as growing conditions, such as the type of soil, input use, and other farmer characteristics \citep{Munshi2004-og}. The consensus in this literature is that the success of improved varieties depends on a range of factors that need to be better understood. Success of improved seeds should be accompanied by complementary conditions and inputs that would allow the full potential of these varieties to be realized. Specifically, extension services and on-farm field trials, seed variety characteristics and rainfall have been found to be crucial to the adoption of improved maize in Tanzania \citep{Kaliba2000-jh}. In the specific case of Ethiopia, labor, fertilizer use, farmers’ experience with extension packages, rainfall suitability and prices have been shown to increase the opportunity cost of not adopting improved wheat varieties \citep{Wale2006-bv}. Market access and the accessibility of extension services are also critical in the adoption of improved chickpea varieties in Ethiopia \citep{Verkaart2019-ol}. Other important determinants of heterogeneous effects include risk aversion \citep{Holden2016-vy}, farm size \citep{Ghimire2015-bd}, and credit constraints \citep{Simtowe2008-jn,Balana2020-hx}.
-
-
-
-A different branch of the literature provides an alternative explanation for such low adoption rates, focusing on heterogeneous potential returns to adoption \citep{Suri2011-oi}. This literature suggests that even if returns to adoption are high, farmers may fail to adopt if they face low comparative advantage to adoption. Other methods used in the literature fail to account for this heterogeneity, admitting only the presence of time-constant and/or time-varying unobserved heterogeneities (depending on the data structure) for identification purposes \citep{Kassie2018-xn,Falco2011-rt}. These methods ignore the possibility of a farmer’s comparative advantage of using an improved technology over a traditional one as playing a central role in their adoption decision. 
-
-
-We rely on Suri’s method and its extension in \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc} to account for such heterogeneous comparative advantages and evaluate how these are explained by climatic conditions. In Ethiopia, rainfall deviations from historical averages are found to be the main driver of heterogeneous effects for adopting agronomic packages \citep{Marenya2020-kb}. Similar experiences from Malawi show exposure to past droughts is found to increase the adoption of drought-tolerant maize among farmers that also receive subsidies \citep{Katengeza2019-af} and the dis-adoption of traditional local maize \citep{Holden2016-vy}.
-
-We will contribute to this literature by considering historical climate averages on the suitability of improved varieties to understand whether adoption is indeed realized where its potential is highest. Moreover, we will contribute to the understanding of how water conservation innovations and irrigation mitigate the effects of droughts on the potential of improved seeds.
 
 
 
@@ -105,8 +99,8 @@ Figure \ref{map:regions} shows the spatial distribution of the locations of the 
 
 \begin{figure}
     \centering
-    \includegraphics{results/figures/map_hhids.pdf}
     \caption{Spatial Distribution of Households Surveyed}
+    \includegraphics{results/figures/map_hhids.pdf}
     \figcaption{Note: Green markers denote the locations of households}
     \label{map:regions}
 \end{figure}
@@ -135,8 +129,8 @@ We find that 38\% of households self-report adopting a “new” improved variet
 
 \begin{figure}
     \centering
-    \includegraphics{results/figures/adoption_r4.png}
     \caption{Adoption rates of improved varieties in 2018 (by self-report, purity level, crop type, source and year of release)}
+    \includegraphics{results/figures/adoption_r4.png}
     \figcaption{Note: Shares represent the proportion of adopters among maize farmers. Acronyms include: SR1 [=1 if New, 2nd gen or recycled, =0 if Traditional]; SR2  [=1 if New, =0 if 2nd gen, recycled or traditional]; DNA70 - Improved if purity $>=$70$\%$; DNA90 - Improved if purity $>=$90$\%$; DNA95 - Improved if purity $>=$95$\%$; HYB - Improved DNA, [=1 Hybrid, 0=Open pollinated]; DTM - Drought tolerant Maize [=1 DTM, 0=otherwise], CGIAR source [=1 if germplasm associated to a CGIAR-related thread], Exotic source [=1 if germplasm associated to an exotic source], Released 2000+ [=1 if DNA associated to a variety released on year 2000 or later], Released 2010+ [=1 if DNA associated to a variety released on year 2010 or later]. QPM is not included as there are too few households planting QPM seeds (n=6).}
     \label{fig:adoption_r4}
 \end{figure}
@@ -147,8 +141,8 @@ Understanding the effects of improved seed adoption is not only challenging beca
 
 \begin{figure}
     \centering
-    \includegraphics{results/figures/missclassification.png}
     \caption{Correlation of different definitions of improved seeds, 4th round}
+    \includegraphics[width = 0.9\textwidth]{results/figures/missclassification.png}
     \figcaption{Note: Shares represent the proportion of adopters among maize farmers. Acronyms include: SR1 [=1 if New, 2nd gen or recycled, =0 if Traditional]; SR2  [=1 if New, =0 if 2nd gen, recycled or traditional]; DNA70 - Improved if purity $>=$70$\%$; DNA90 - Improved if purity $>=$90$\%$; DNA95 - Improved if purity $>=$95$\%$; HYB - Improved DNA, [=1 Hybrid, 0=Open pollinated]; DTM - Drought tolerant Maize [=1 DTM, 0=otherwise], CGIAR source [=1 if germplasm associated to a CGIAR-related thread], Exotic source [=1 if germplasm associated to an exotic source], Released 2000+ [=1 if DNA associated to a variety released on year 2000 or later], Released 2010+ [=1 if DNA associated to a variety released on year 2010 or later]. QPM is not included as there are too few households planting QPM seeds (n=6).}
     \label{fig:missclassification}
 \end{figure}
@@ -169,7 +163,7 @@ To generate results for adoption, we use the unrestricted model as outlined in \
 y_{it}&=\sum_{\underline{h}\in\mathcal{H}\backslash (1,1,1)}\mu_{\underline{h}}+\sum_{\underline{h}\in\mathcal{H}_{S}}\Delta_{\underline{h}}h_{it}1\{h_{i}=\underline{h}\} + \kappa_{(1,1,1)}h_{it}1\{\underline{h}=(1,1,1)\}+ X_{it}\beta+\varepsilon_{it}.\label{eq:GRC}
 \end{align}
 
-where $y$ is log yields, $\mu_{\underline{h}}$ are binary variables for being in trajectory $\underline{h}$, $h$ is a binary variable for whether household $i$ adopted in wave $t$, $X$ are a set of controls and $\Delta_{0,0,1}$ are the returns to adoption for trajectory $(0,0,1)$. $\kappa_{(1,1,1)}$ is the average yield with adoption of the always-adopters, where $\kappa_{(1,1,1)} = \mu_{(1,1,1)} + \Delta_{(1,1,1)}$. It is not possible to separately identify $\mu_{(1,1,1)}$ and $\Delta_{(1,1,1)}$ without adding more structure to the model in the form of the linearity in comparative advantage (LCA) restriction, which we explain how to test for below.
+where $y$ is log yields, $\mu_{\underline{h}}$ are binary variables for being in trajectory $\underline{h}$, $h$ is a binary variable for whether household $i$ adopted in wave $t$, and $X$ are a set of controls. $\kappa_{(1,1,1)}$ is the average yield with adoption of the always-adopters, where $\kappa_{(1,1,1)} = \mu_{(1,1,1)} + \Delta_{(1,1,1)}$. It is not possible to separately identify $\mu_{(1,1,1)}$ and $\Delta_{(1,1,1)}$ without adding more structure to the model in the form of the linearity in comparative advantage (LCA) restriction, which we explain how to test for below.
 
 
 We estimate comparative advantage using the restricted model:
@@ -179,7 +173,7 @@ y_{it}&=\sum_{\underline{h}\in\mathcal{H}\backslash (1,1,1)}\mu_{\underline{h}}+
 &~~~+\left(\mu_{(1,1,1)}+\phi\left(\mu_{(1,1,1)}-\mu_{(0,0,1)}\right)\right)h_{it}1\{h_{i}=(1,1,1)\} + X_{it}\beta +\varepsilon_{it},\label{eq:GRC_Suri}
 \end{align}
 
-where $\phi$ is the parameter which describes sorting in the economy. If $\phi$ is positive, then higher yields is associated with higher comparative advantage, denoting that those that adopt also tend to have the highest returns to adoption. If it is negative, however, this denotes that there might be barriers, such as a lack of fertilizer access, and bad roads that restrict the ability to buy hybrid seed. $\phi$ is estimated in two ways: through the restricted model just mentioned and by a weak-identification brute force grid procedure, which allows for calculating the confidence interval for $\phi$ for multiple sets of trajectories. The advantage of the weak-identification robust procedure is that we can test for whether the data satisfies the conditions necessary for an interpretable $\phi$ parameter.
+where $\phi$ is the parameter which describes sorting in the economy and $\Delta_{0,0,1}$ are the returns to adoption for trajectory $(0,0,1)$. If $\phi$ is positive, then higher yields is associated with higher comparative advantage, denoting that those that adopt also tend to have the highest returns to adoption. If it is negative, however, this denotes that there might be barriers, such as a lack of fertilizer access, and bad roads that restrict the ability to buy hybrid seed. $\phi$ is estimated in two ways: through the restricted model just mentioned and by a weak-identification brute force grid procedure, which allows for calculating the confidence interval for $\phi$ for multiple sets of trajectories. The advantage of the weak-identification robust procedure is that we can test for whether the data satisfies the conditions necessary for an interpretable $\phi$ parameter. If there are trajectories which yield a $\phi$ with a non-infinite confidence interval, then the LCA is at least partially satisfied.
 
 Equation \ref{eq:GRC_Suri} can be estimated by way of General Method of Moments. Parameters for returns to adoption and comparative advantage can be post-estimated by the delta method, where the expression for returns of each trajectory can be derived from:
 
@@ -200,7 +194,7 @@ Once we generate $\theta$ and $\Delta$ for each trajectory, we can examine heter
 \subsection{Endogenous Switching regression}
 The ESS4 is a unique data-set that includes DNA fingerprinting of maize seed type. This brings new possibilities in terms of exploring.... sayESS4 no longer part of panel but that still useful,.... \par
 The group random coefficient model used the variation in the adoption trajectories of each observation in the ESS 1-3 panel as a source of information that allows for an unbiased estimation. ESS4 is no longer part of this panel data-set, hence, in order to estimate the effect of the adoption of improved seeds on yields, an alternative estimation method is needed. We propose an endogenous switching regression model which accounts for unobserved heterogeneity in adoption decisions. This method imposes restrictive assumptions regarding the distribution of the errors of the selection and output equations. At the same time, the exclusion restriction needs to be satisfied in order to reduce the bias of the estimation. Nevertheless, the endogenous switching regression holds certain advantages over other methodologies used for identifying unbiased estimates with cross-sectional observational data such as propensity score matching or other instrumental variable approaches (\cite{shiferaw2014adoption}) and has been used to study similar questions in the past (\citealt{falco2011does}, \citealt{kabunga2012yield}). \par
-The decision to adopt and improved seed is determined by a series of observed and unobserved variables. Equation \ref{eq:switch_latent} shows the definition for a latent variable $A^*$ that reflects the benefit from adopting an improved seed relative to planting a traditional one. As shown in the equation, household $i$ will decide to adopt ($A_i$=1)if these perceived benefits of adoption are positive.
+This approach models the effect of improved seed adoption on yields in two stages. First, the decision to adopt an improved seed is determined by a series of observed and unobserved variables. Equation \ref{eq:switch_latent} shows the definition for a latent variable $A^*$ that reflects the benefit from adopting an improved seed relative to planting a traditional one. As shown in the equation, household $i$ will decide to adopt ($A_i$=1)if these perceived benefits of adoption are positive.
 
 \begin{align}
 A_i^*=Z_i\alpha+\varepsilon_i \; \text{with} \, A_i    \begin{cases}
@@ -208,13 +202,19 @@ A_i^*=Z_i\alpha+\varepsilon_i \; \text{with} \, A_i    \begin{cases}
       0, & \text{otherwise}
     \end{cases} \label{eq:switch_latent}
 \end{align}
-Vector $Z$ includes variables that determine if a particular household may benefit from the adoption of improved seeds. The definition of what an improved seed varies in the estimations presented in the next sections and consider not only what 
+Vector $Z$ includes variables that determine if a particular household may benefit from the adoption of improved seeds, such as farmers' demographic characteristics (education, age, female headed households) and land tenure status of their plots. In the estimations presented in the next sections, we consider different definitions of improved seeds, and include not only self-reported seed classification but also the results of DNA fingerprinting.  \par
+The second stage presents the outcome functions conditional on adoption:
+\begin{align}
+    
+\end{align}
 
 \section{Results}
 
 \subsection{Group Random Coefficients}
 
-Our results use two definitions of yields: measured cropcuts of dry maize and self-reported yields maize yields. Each measure of yields has its benefits and drawbacks. Cropcuts, for instance, provides a true estimate of yields for a given parcel of land, but it is at the cost of a reduced sample size. Self-reports have larger sample sizes, but may suffer from measurement error. For controls we use the years of education of the household head, the age of the household head, the sex of the household head, whether there is a title for the land being cultivated, the parcel size in hectares, as well as the hours of household and hired labor. Commensurate with the literature, we also include interactions of these controls with hybrid adoption as added controls. The results of the regression are shown in Table \ref{tbl:unres}.
+Our results use two definitions of yields: measured cropcuts of dry maize and self-reported yields maize yields. Each measure of yields has its benefits and drawbacks. Cropcuts, for instance, provides a true estimate of yields for a given parcel of land, but it is at the cost of a reduced sample size. Self-reports have larger sample sizes, but may suffer from measurement error. For controls we use the years of education of the household head, the age of the household head, the sex of the household head, whether there is a title for the land being cultivated, the parcel size in hectares, as well as the hours of household and hired labor. Commensurate with the literature, we also include interactions of these controls with hybrid adoption as added controls. Interactions with the hybrid variable are meant to account further account for household specific variation that adopter may have. The results of the regression are shown in Table \ref{tbl:unres}.
+
+The results for self-reported and cropcut yields are largely similar, pointing to the fact that self-reported yields may not have a large amount of measurement error. In the base case, there are some positive effects to adoption, but with all controls included, marginal effects of adoption for each trajectory are negative and significant. This translates to average yields of adoption that close to 0 or even negative. 
 
 % {\small\tabcolsep=3pt  % hold it local
 \resizebox{1\textwidth}{!}{
@@ -231,9 +231,8 @@ Our results use two definitions of yields: measured cropcuts of dry maize and se
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.75]{results/figures/theta.png}
     \caption{Comparative Advantage and Returns by Trajectory (Dry Cropcuts)}
-    \label{fig:theta_delta_raw}
+    \includegraphics[scale=0.75]{results/figures/theta.png}\label{fig:theta_delta_raw}
 \end{figure}
 
 \begin{figure}
