@@ -58,37 +58,11 @@ In this paper, we revisit the mechanism proposed by  \citep{Suri2011-oi} that ju
 %% Expand a bit on the methods
 In our paper, we build on that literature by investigating hybrid maize seed adoption in Ethiopia, focusing on how heterogeneous returns drive the decision to use improved seed varieties. We implement two complementary estimation strategies. First, we implement at Group Random Coefficients estimation as originally devised by \cite{Suri2011-oi} and later expanded by \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc}. The advantage of our estimation strategy is that we do not rely on identification from a valid instrument,
 but modelling the heterogeneity directly through a projection of their returns to adoption on their observed
-”trajectory” of adoption. This first estimation strategy uses data from the first three survey rounds that allow us to follow the same households across time (ESS1 to ESS3). The results show returns to adoption are consistently negative, a result that runs against the careful lab development of the improved seed varieties. To expand on this results, our second estimation strategy implements an endogenous switching regressions that exploits the last round of the survey (ESS4). The latest survey round is not a a continuation of the panel of the first three rounds, but has novel data on the genetic finger prints of the seeds used, that we exploit to understand why hybrid seed varieties seem not to increase returns when adopted. 
+”trajectory” of adoption. This first estimation strategy uses data from the first three survey rounds that allow us to follow the same households across time (ESS1 to ESS3). The results show returns to adoption are consistently negative, a result that runs against the careful lab development of the improved seed varieties. To expand on this results, our second estimation strategy implements an endogenous switching regressions that exploits the last round of the survey (ESS4). The latest survey round is not a a continuation of the panel of the first three rounds, but has novel data on the genetic finger prints of the seeds used, that we exploit to understand why hybrid seed varieties seem not to increase returns when adopted. Varying how strict of a definition for hybrid seeds we use, starting from second-generation and recycled (SR1), and a more strict definition, which includes only new varieties (SR2), we find that  farmers that adopted a seeds with a less pure genetic profile would have had better returns by simply not adopting. 
 
-Varying how strict of a definition for hybrid seeds we use, starting from second-generation and recycled (SR1), and a more strict definition, which includes only new varieties (SR2), we find that  farmers that adopted a seeds with a less pure genetic profile 
-
-self-reported improved seed would’ve been better off not adopting, and farmers
-that did not adopt a self-reported improved seed would’ve been better off adopting.
-16
+We put together the results from both estimation strategies to suggest that the negative return to adoption we find under the Group Random Coefficients estimation reflect that relying on a loose definition of hybrid seeds
 
 
-
-
-%% What we find
-
-Our results show evidence that showcase that the average yields without adoption for 
-
-return to adoption
-% Evidence of heterogeneity in response to hybrid adoption for joiners and leavers, however their average yield without adoption ($\mu_{01}$,$\mu_{10}$) are very similar.\\
-
-
-% are also driven by climate and how this can affect dis-adoption decisions. We extend the role of heterogeneity in a household’s
-% decision to adopt new technologies in four fronts. 
-
-% We describe what we do here and what we find. We can expand as we have results
-1) First, we test if the adoption of improved seed varieties takes place where the net benefits of adoption is highest? 
-
-2) Second, we test how the adoption decision correlates with other adaptation strategies such as water storage, and irrigation augment a household’s comparative advantage in adoption.
-
-3) Third. what are the drivers of dis-adoption of improved maize seed? and (4) is it possible to extend the methodology in \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc} by including time-varying characteristics to the Group Random Coefficients (GRC) model?
-
-
-% Persistent lack of adoption is a reflection of the distribution of (observable and unobservable) costs and benefits of the technology. The approach here models households’ adoption decisions in an environment with household-specific heterogeneity in the costs and benefits, and hence profits, to the technology. I estimate how the returns to the technology vary across farmers and then compare these returns to the adoption decisions of farmers. I find that farmers with low (or zero) returns to the technology are precisely the farmers who do not adopt it.  In particular, I use a generalized
 
 
 
@@ -234,7 +208,7 @@ A_i^*=Z_i\alpha+\varepsilon_i \; \text{with} \, A_i    \begin{cases}
       0, & \text{otherwise}
     \end{cases} \label{eq:switch_latent}
 \end{align}
-Vector $Z$ includes variables that determine if a particular household may benefit from the adoption of improved seeds. 
+Vector $Z$ includes variables that determine if a particular household may benefit from the adoption of improved seeds. The definition of what an improved seed varies in the estimations presented in the next sections and consider not only what 
 
 \section{Results}
 
