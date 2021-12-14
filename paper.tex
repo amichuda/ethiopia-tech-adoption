@@ -56,7 +56,9 @@ The facts sub-Saharan farmers continue to use traditional farming techniques whe
 In this paper, we revisit the mechanism proposed by  \citep{Suri2011-oi} that justifies this lack of technology adoption on the existence of farmers heterogeneity. In particular, the fact that farmers with high net returns to the technology use new technologies while those with low returns do not. Adoption of a technology involves several dimensions such as market integration, access to supplementary inputs like fertilizer, as well agro-ecological considerations such as climate, altitude and soil quality. Ignoring the heterogeneity of these factors can hide the true impact of adoption, as different sub-populations may be impacted by the same technology in different, and even opposite ways. One way to tackle this problem, proposed by \citep{Suri2011-oi}, centers around quantifying the comparative advantage of a household to adopting improved seed varieties. Even when average returns are high, farmers may face heterogeneous returns based on their own, unobservable, comparative advantage in adopting new technologies. Using a correlated random coefficient model, Suri’s seminal paper finds that farmers’ lack of adoption is driven by insufficient net benefits to the technology stemming from poor infrastructure. Similar work in Ethiopia on improved chickpea varieties suggests that the economic returns to adoption plays a major role in the decision to adopt \citep{Michler2018-wk}.
 
 %% Expand a bit on the methods
-In our paper, we build on that literature by investigating hybrid maize seed adoption in Ethiopia, focusing on how heterogeneous returns XXXXXXXXXXXXXXXX
+In our paper, we build on that literature by investigating hybrid maize seed adoption in Ethiopia, focusing on how heterogeneous returns drive the decision to use improved seed varieties. We implement two complementary estimation strategies. First, we implement at Group Random Coefficients estimation as originally devised by \cite{Suri2011-oi} and later expanded by \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc}. The advantage of our estimation strategy is that we do not rely on identification from a valid instrument,
+but modelling the heterogeneity directly through a projection of their returns to adoption on their observed
+”trajectory” of adoption. This first estimation strategy uses data from the first three survey rounds that allow us to follow the same households across time (ESS1 to ESS3). The results show returns to adoption are consistently negative, a result that runs against the careful lab development of the improved seed varieties. To expand on this results, our second estimation strategy implements an endogenous switching regressions that exploits the last round of the survey (ESS4). The latest survey round is not a a continuation of the panel of the first three rounds, but has novel data on the genetic finger prints of the seeds used, that we exploit to understand why hybrid seed varieties seem not to increase returns when adopted. 
 
 
 %% What we find
@@ -177,17 +179,25 @@ The advantage of our estimation strategy is that we do not rely on identificatio
 
 \input{results/tables/traj}
 
-Table \ref{tbl:Trajectories} maps out the frequencies of the different trajectories present in the data, sorted by frequency. The largest portion of the data are those that do not adopt improved maize seed at all, followed with sharp decline, to those that use improved maize seed in every period. Interestingly, adoption trajectories seem to be more popular for later adoptions than earlier ones. Most households do not adopt at all (``never-adopters''), but the second most frequent trajectory are those that adopt in every wave (``always-adopters''). Let $\mathcal{H}$ be the set of these trajectories in the data.
+Table \ref{tbl:Trajectories} maps out the frequencies of the different trajectories present in the data, sorted by frequency. The largest portion of the data are those that do not adopt improved maize seed at all, followed with sharp decline, to those that use improved maize seed in every period. Interestingly, adoption trajectories seem to be more popular for later adoptions than earlier ones. Most households do not adopt at all (``never-adopters''), but the second most frequent trajectory are those that adopt in every wave (``always-adopters''). Let $\mathcal{H}$ be the set of these trajectories in the data and let $\mathcal{H}_S$ be the set of switcher trajectories, i.e. $\mathcal{H}_S = \mathcal{H}\backslash\{(0,0,0), (1,1,1)\}$
+
+To generate results for adoption, we use the unrestricted model as outlined in \cite{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc}:
+
+\begin{align}
+y_{it}&=\sum_{\underline{h}\in\mathcal{H}\backslash (1,1,1)}\mu_{\underline{h}}+\sum_{\underline{h}\in\mathcal{H}_{S}}\Delta_{\underline{h}}h_{it}1\{h_{i}=\underline{h}\} + \kappa_{(1,1,1)}h_{it}1\{\underline{h}=(1,1,1)\}+ X_{it}\beta+\varepsilon_{it}.\label{eq:GRC}
+\end{align}
+
+where $y$ is log yields, $\mu_{\underline{h}}$ are binary variables for being in trajectory $\underline{h}$, $h$ is a binary variable for whether household $i$ adopted in wave $t$, $X$ are a set of controls and $\Delta_{0,0,1}$ are the returns to adoption for trajectory $(0,0,1)$. $\kappa_{(1,1,1)}$ is the average yield with adoption of the always-adopters, where $\kappa_{(1,1,1)} = \mu_{(1,1,1)} + \Delta_{(1,1,1)}$. It is not possible to separately identify $\mu_{(1,1,1)}$ and $\Delta_{(1,1,1)}$ without adding more structure to the model in the form of the linearity in comparative advantage (LCA) restriction, which we explain how to test for below.
 
 
-We estimate comparative advantage using the restricted model outlined in \cite{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc}:
+We estimate comparative advantage using the restricted model:
 
 \begin{align}
 y_{it}&=\sum_{\underline{h}\in\mathcal{H}\backslash (1,1,1)}\mu_{\underline{h}}+\Delta_{(0,0,1)}h_{it}+\phi(\mu_{(0,0,1)}-\mu_{(0,0,1)})h_{it}1\{h_{i}=(0,0,1)\}\nonumber\\
 &~~~+\left(\mu_{(1,1,1)}+\phi\left(\mu_{(1,1,1)}-\mu_{(0,0,1)}\right)\right)h_{it}1\{h_{i}=(1,1,1)\} + X_{it}\beta +\varepsilon_{it},\label{eq:GRC_Suri}
 \end{align}
 
-where $y$ is log yields, $\mu_{\underline{h}}$ are binary variables for being in trajectory $\underline{h}$, $h$ is a binary variable for whether household $i$ adopted in wave $t$, $X$ are a set of controls and $\Delta_{0,0,1}$ are the returns to adoption for trajectory $(0,0,1)$. For reasons outlined in \cite{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc}, we use a base trajectory. $\phi$ is the parameter which summarizes sorting into the economy. If $\phi$ is positive, then higher yields is associated with higher comparative advantage, denoting that those that adopt also tend to have the highest returns to adoption. If it is negative, however, this denotes that there might be barriers, such as a lack of fertilizer access, and bad roads that restrict the ability to buy hybrid seed.
+where $\phi$ is the parameter which describes sorting in the economy. If $\phi$ is positive, then higher yields is associated with higher comparative advantage, denoting that those that adopt also tend to have the highest returns to adoption. If it is negative, however, this denotes that there might be barriers, such as a lack of fertilizer access, and bad roads that restrict the ability to buy hybrid seed. $\phi$ is estimated in two ways: through the restricted model just mentioned and by a weak-identification brute force grid procedure, which allows for calculating the confidence interval for $\phi$ for multiple sets of trajectories. The advantage of the weak-identification robust procedure is that we can test for whether the data satisfies the conditions necessary for an interpretable $\phi$ parameter.
 
 Equation \ref{eq:GRC_Suri} can be estimated by way of General Method of Moments. Parameters for returns to adoption and comparative advantage can be post-estimated by the delta method, where the expression for returns of each trajectory can be derived from:
 
@@ -195,7 +205,7 @@ $$
 \Delta_{\underline{h}}=\phi\left(\mu_{\underline{h}}-\mu_{(0,0,1)}\right) + \Delta_{(0,0,1)}
 $$
 
-And comparative advantage can be derived from:
+for trajectory $\underline{h} \neq (0,0,1)$.\footnote{Since we use $(0,0,1)$ as our base, we already have returns available for that trajectory, namely $\Delta_{(0,0,1)}$} Comparative advantage can be derived from:
 
 $$
 \theta_{\underline{h}} = \mu_{\underline{h}} - E(\mu_{\underline{h}})
@@ -203,20 +213,26 @@ $$
 
 where $E(\mu_{\underline{h}}) = \sum_{\mathcal{H}} \pi_h \cdot \mu_h$ for $\pi_h$ being the frequency weight for trajectory $h$. The comparative advantage of each trajectory tells us how much a household with a given trajectory benefits from adoption. $\theta <0 $ denotes that returns to adoption are negative and that a household loses by adopting.
 
-Once we generate $\theta$ and $\Delta$ for each trajectory, we can examine heterogeneous effects to adoption. In its raw form
-
+Once we generate $\theta$ and $\Delta$ for each trajectory, we can examine heterogeneous effects to adoption. In its raw form, that means that have eight comparative advantages available for comparison, which is rich in its information, but difficult to interpret as a result, we will aggregate $\theta$ in two ways to improve interpretability: (1) which wave the household adopted, and (2) the number of time adoption took place. We do this by taking a simple average, grouped by each of these factors.
 
 \subsection{Endogenous Switching regression}
-The ESS4 is a unique data-set that includes DNA fingerprinting of maize seed type. This brings new possibilities in terms of exploring.... sayESS4 no longer part of panel but that still useful,....//
-The group random coefficient model used the variation in the adoption trajectories of each observation in the ESS 1-3 panel as a source of information that allows for an unbiased estimation. ESS4 is no longer part of this panel data-set, hence, in order to estimate the effect of the adoption of improved seeds on yields, an alternative estimation method is needed. We propose an endogenous switching regression model which accounts for unobserved heterogeneity in adoption decisions. This method, although it imposes restrictive assumptions regarding the distribution of the errors 
+The ESS4 is a unique data-set that includes DNA fingerprinting of maize seed type. This brings new possibilities in terms of exploring.... sayESS4 no longer part of panel but that still useful,.... \par
+The group random coefficient model used the variation in the adoption trajectories of each observation in the ESS 1-3 panel as a source of information that allows for an unbiased estimation. ESS4 is no longer part of this panel data-set, hence, in order to estimate the effect of the adoption of improved seeds on yields, an alternative estimation method is needed. We propose an endogenous switching regression model which accounts for unobserved heterogeneity in adoption decisions. This method imposes restrictive assumptions regarding the distribution of the errors of the selection and output equations. At the same time, the exclusion restriction needs to be satisfied in order to reduce the bias of the estimation. Nevertheless, the endogenous switching regression holds certain advantages over other methodologies used for identifying unbiased estimates with cross-sectional observational data such as propensity score matching or other instrumental variable approaches (\cite{shiferaw2014adoption}) and has been used to study similar questions in the past (\citealt{falco2011does}, \citealt{kabunga2012yield}). \par
+The decision to adopt and improved seed is determined by a series of observed and unobserved variables. Equation \ref{eq:switch_latent} shows the definition for a latent variable $A^*$ that reflects the benefit from adopting an improved seed relative to planting a traditional one. As shown in the equation, household $i$ will decide to adopt  (A_i=1). 
+
+\begin{align}
+A_i^*=Z_i\alpha+\varepsilon_i \; \text{with} \, A_i    \begin{cases}
+      1, & \text{if}\ A_i^*>0 \\
+      0, & \text{otherwise}
+    \end{cases} \label{eq:switch_latent}
+\end{align}
 
 
 \section{Results}
 
-
-
 \subsection{Group Random Coefficients}
 
+Our results use two definitions of yields: measured cropcuts of dry maize and self-reported yields maize yields. Each measure of yields has its benefits and drawbacks. Cropcuts, for instance, provides a true estimate of yields for a given parcel of land, but it is at the cost of a reduced sample size. Self-reports have larger sample sizes, but may suffer from measurement error. For controls we use the years of education of the household head, the age of the household head, the sex of the household head, whether there is a title for the land being cultivated, the parcel size in hectares, as well as the hours of household and hired labor. Commensurate with the literature, we also include interactions of these controls with hybrid adoption as added controls. The results of the regression are shown in Table \ref{tbl:unres}.
 
 % {\small\tabcolsep=3pt  % hold it local
 \resizebox{1\textwidth}{!}{
@@ -231,6 +247,26 @@ The group random coefficient model used the variation in the adoption trajectori
 }
 % \input{results/tables/grc_YIELD_selfr_tr}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.75]{results/figures/theta.png}
+    \caption{Comparative Advantage and Returns by Trajectory (Dry Cropcuts)}
+    \label{fig:theta_delta_raw}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.75]{results/figures/traj_sum.png}
+    \caption{Aggregation Results: Comparative Advantage and Returns by the Number of Times Adopted (Dry Cropcuts}
+    \label{fig:traj_sum}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.75]{results/figures/when_adopt_cropcut.png}
+    \caption{Aggregation Results: Comparative Advantage and Returns by Wave of Adoption (Dry Cropcuts}
+    \label{fig:when_adopt}
+\end{figure}
 
 \subsection{Endogenous Switching Regression}
 
