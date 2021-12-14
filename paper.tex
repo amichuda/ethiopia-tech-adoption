@@ -60,6 +60,14 @@ In our paper, we build on that literature by investigating hybrid maize seed ado
 but modelling the heterogeneity directly through a projection of their returns to adoption on their observed
 ”trajectory” of adoption. This first estimation strategy uses data from the first three survey rounds that allow us to follow the same households across time (ESS1 to ESS3). The results show returns to adoption are consistently negative, a result that runs against the careful lab development of the improved seed varieties. To expand on this results, our second estimation strategy implements an endogenous switching regressions that exploits the last round of the survey (ESS4). The latest survey round is not a a continuation of the panel of the first three rounds, but has novel data on the genetic finger prints of the seeds used, that we exploit to understand why hybrid seed varieties seem not to increase returns when adopted. 
 
+Varying how strict of a definition for hybrid seeds we use, starting from second-generation and recycled (SR1), and a more strict definition, which includes only new varieties (SR2), we find that  farmers that adopted a seeds with a less pure genetic profile 
+
+self-reported improved seed would’ve been better off not adopting, and farmers
+that did not adopt a self-reported improved seed would’ve been better off adopting.
+16
+
+
+
 
 %% What we find
 
@@ -218,7 +226,7 @@ Once we generate $\theta$ and $\Delta$ for each trajectory, we can examine heter
 \subsection{Endogenous Switching regression}
 The ESS4 is a unique data-set that includes DNA fingerprinting of maize seed type. This brings new possibilities in terms of exploring.... sayESS4 no longer part of panel but that still useful,.... \par
 The group random coefficient model used the variation in the adoption trajectories of each observation in the ESS 1-3 panel as a source of information that allows for an unbiased estimation. ESS4 is no longer part of this panel data-set, hence, in order to estimate the effect of the adoption of improved seeds on yields, an alternative estimation method is needed. We propose an endogenous switching regression model which accounts for unobserved heterogeneity in adoption decisions. This method imposes restrictive assumptions regarding the distribution of the errors of the selection and output equations. At the same time, the exclusion restriction needs to be satisfied in order to reduce the bias of the estimation. Nevertheless, the endogenous switching regression holds certain advantages over other methodologies used for identifying unbiased estimates with cross-sectional observational data such as propensity score matching or other instrumental variable approaches (\cite{shiferaw2014adoption}) and has been used to study similar questions in the past (\citealt{falco2011does}, \citealt{kabunga2012yield}). \par
-The decision to adopt and improved seed is determined by a series of observed and unobserved variables. Equation \ref{eq:switch_latent} shows the definition for a latent variable $A^*$ that reflects the benefit from adopting an improved seed relative to planting a traditional one. As shown in the equation, household $i$ will decide to adopt  (A_i=1). 
+The decision to adopt and improved seed is determined by a series of observed and unobserved variables. Equation \ref{eq:switch_latent} shows the definition for a latent variable $A^*$ that reflects the benefit from adopting an improved seed relative to planting a traditional one. As shown in the equation, household $i$ will decide to adopt ($A_i$=1)if these perceived benefits of adoption are positive.
 
 \begin{align}
 A_i^*=Z_i\alpha+\varepsilon_i \; \text{with} \, A_i    \begin{cases}
@@ -226,7 +234,7 @@ A_i^*=Z_i\alpha+\varepsilon_i \; \text{with} \, A_i    \begin{cases}
       0, & \text{otherwise}
     \end{cases} \label{eq:switch_latent}
 \end{align}
-
+Vector $Z$ includes variables that determine if a particular household may benefit from the adoption of improved seeds. 
 
 \section{Results}
 
@@ -236,7 +244,7 @@ Our results use two definitions of yields: measured cropcuts of dry maize and se
 
 % {\small\tabcolsep=3pt  % hold it local
 \resizebox{1\textwidth}{!}{
-\input{results/tables/grc_YIELD_cropcutdry_tr}
+\input{results/tables/grc}
 }
 
 \resizebox{1\textwidth}{!}{
