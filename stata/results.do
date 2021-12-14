@@ -161,7 +161,7 @@ foreach var of varlist YIELD_cropcutfresh_tr YIELD_cropcutdry_tr YIELD_selfr_tr 
 }
 
 loc controls = "yrseduc age_head sex_head  title parcesizeHA hhlabor hiredlabor"
-loc interactions = "1.impmaize 1.impmaize#c.(`controls')"
+loc interactions = "1.impmaize#c.(`controls')"
 
 
 capture program drop "${root}/stata/grc_weak_id_inference"
@@ -186,7 +186,7 @@ foreach var of varlist YIELD_cropcutdry_tr YIELD_selfr_tr {
 					- {Delta}*(1.impmaize)  /// 
 					- {phi}*(`switcherpars')            ///
 					- ({mu_always} + {phi}*({mu_always}                     ///
-					- {mu:2.trajectory}))*($always.trajectory#1.impmaize) -{xb: `controls'})    ///
+					- {mu:2.trajectory}))*($always.trajectory#1.impmaize) -{xb: `controls' })    ///
 					, instruments(i($noalways).trajectory 1.impmaize         ///
 					i($switchers $always).trajectory#1.impmaize `controls' , nocons)     ///
 					vce(cluster household_id)  winitial(identity) from(initval) 
@@ -223,7 +223,7 @@ foreach var of varlist YIELD_cropcutdry_tr YIELD_selfr_tr {
 
 esttab grc_cropcutdr grc_cropcutdr_controls grc_cropcutdr_controls_int grc_selfr_tr grc_selfr_tr_controls grc_selfr_tr_controls_int using "$root/results/tables/grc.tex", ///
 keep(*trajectory*) drop(0.trajectory) mtitles("Log Dry Cropcuts" "Log Dry Cropcuts" "Log Dry Cropcuts" "Log Self-Report" "Log Self-Report" "Log Self-Report") star(* 0.10 ** 0.05 *** 0.01) tex replace s(N controls interacted, label("Observations" "Controls" "Interact w/ Hybrid")) ///
-coeflabels(`coeflabels') substitute(\_ _) se nogaps compress 
+coeflabels(`coeflabels') substitute(\_ _) se nogaps compress title(Unrestricted Model of Dry Cropcuts and Self-reported Yields \label{tbl:unres})
 
 mata 
 
