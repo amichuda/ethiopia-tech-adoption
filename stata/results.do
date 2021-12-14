@@ -174,7 +174,7 @@ forval i=1/7 {
 	local coeflabels `coeflabels' `i'.trajectory  "$\mu_{``j''}$" `i'.trajectory#1.impmaize "$\Delta_{``j''}$"
 }
 
-local coeflabels `coeflabels' 8.trajectory#1.hybrid "$\kappa_{111}$"
+local coeflabels `coeflabels' 8.trajectory#1.impmaize "$\kappa_{111}$"
 
 
 foreach var of varlist YIELD_cropcutdry_tr YIELD_selfr_tr {
