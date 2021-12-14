@@ -174,64 +174,61 @@ forval i=1/7 {
 	local coeflabels `coeflabels' `i'.trajectory  "$\mu_{``j''}$" `i'.trajectory#1.impmaize "$\Delta_{``j''}$"
 }
 
-net install parallel, from(https://raw.github.com/gvegayon/parallel/stable/) replace
-mata mata mlib index
-
-parallel initialize 8
-
-foreach var of varlist YIELD_cropcutdry_tr {
-	tokenize `""Log Dry Cropcuts" "Log Self-Report""'
+local coeflabels `coeflabels' 8.trajectory#1.hybrid "$\kappa_{111}$"
 
 
-	matrix define initval = (0, 6,6,6,6, 6,6,5,-1,1,-1,2,3,5,7,4,3,3)
-	
-	gmm     	(ln_`var' - {mu: i($noalways).trajectory} ///              	
-				 - {Delta}*(1.impmaize)  /// 
-				- {phi}*(`switcherpars')            ///
-				- ({mu_always} + {phi}*({mu_always}                     ///
-				- {mu:2.trajectory}))*($always.trajectory#1.impmaize) -{xb: `controls'})    ///
-				, instruments(i($noalways).trajectory 1.impmaize         ///
-				i($switchers $always).trajectory#1.impmaize `controls' , nocons)     ///
-				vce(cluster household_id)  winitial(identity) from(initval) 
+foreach var of varlist YIELD_cropcutdry_tr YIELD_selfr_tr {
 
 	if "`var'" == "YIELD_cropcutdry_tr" {
+		matrix define initval = (0, 6,6,6,6, 6,6,5,-1,1,-1,2,3,5,7,4,3,3)
+		
+		gmm     	(ln_`var' - {mu: i($noalways).trajectory} ///              	
+					- {Delta}*(1.impmaize)  /// 
+					- {phi}*(`switcherpars')            ///
+					- ({mu_always} + {phi}*({mu_always}                     ///
+					- {mu:2.trajectory}))*($always.trajectory#1.impmaize) -{xb: `controls'})    ///
+					, instruments(i($noalways).trajectory 1.impmaize         ///
+					i($switchers $always).trajectory#1.impmaize `controls' , nocons)     ///
+					vce(cluster household_id)  winitial(identity) from(initval) 
 		estimates store theta_model
 
 	}
 
-	/* local i = `i' + 1
 
-	grc_weak_id_inference ln_`var', h(impmaize) min(-10) max(10) inc(0.01) hhid(household_id) test("base") base(2) progress(1) store(grc)
-	mat grc_mat = real(r(min_phi23)),real(r(max_phi23)) \ real(r(min_phi24)),real(r(max_phi24)) \ real(r(min_phi25)),real(r(max_phi25)) \ real(r(min_phi26)),real(r(max_phi26)) \ real(r(min_phi27)),real(r(max_phi27)) \ real(r(min_phi_joint)),real(r(max_phi_joint))
+	local i = `i' + 1
 
-	estadd local controls "No" : grc
-	estadd local interacted = "No" : grc
+	local short_var_name = substr("`var'", 7,9) 
 
-	grc_weak_id_inference ln_`var', h(impmaize) min(-10) max(10) inc(0.01) hhid(household_id) test("base") base(2) controls(`controls') progress(1) store(grc_controls)
-	mat grc_mat_controls = real(r(min_phi23)),real(r(max_phi23)) \ real(r(min_phi24)),real(r(max_phi24)) \ real(r(min_phi25)),real(r(max_phi25)) \ real(r(min_phi26)),real(r(max_phi26)) \ real(r(min_phi27)),real(r(max_phi27)) \ real(r(min_phi_joint)),real(r(max_phi_joint))
+	grc_weak_id_inference ln_`var', h(impmaize) min(-10) max(10) inc(0.01) hhid(household_id) test("base") base(2) progress(1) store(grc_`short_var_name')
+	mat grc_`short_var_name'_mat = real(r(min_phi23)),real(r(max_phi23)) \ real(r(min_phi24)),real(r(max_phi24)) \ real(r(min_phi25)),real(r(max_phi25)) \ real(r(min_phi26)),real(r(max_phi26)) \ real(r(min_phi27)),real(r(max_phi27)) \ real(r(min_phi_joint)),real(r(max_phi_joint))
 
-	estadd local controls "Yes" : grc_controls
-	estadd local interacted = "No" : grc_controls
+	estadd local controls "No" : grc_`short_var_name'
+	estadd local interacted = "No" : grc_`short_var_name'
 
-	grc_weak_id_inference ln_`var', h(impmaize) min(-10) max(10) inc(0.01) hhid(household_id) test("base") base(2) controls(`controls' `interactions') progress(1) store(grc_controls_int)
-	mat grc_mat_controls_int = real(r(min_phi23)),real(r(max_phi23)) \ real(r(min_phi24)),real(r(max_phi24)) \ real(r(min_phi25)),real(r(max_phi25)) \ real(r(min_phi26)),real(r(max_phi26)) \ real(r(min_phi27)),real(r(max_phi27)) \ real(r(min_phi_joint)),real(r(max_phi_joint))
+	grc_weak_id_inference ln_`var', h(impmaize) min(-10) max(10) inc(0.01) hhid(household_id) test("base") base(2) controls(`controls') progress(1) store(grc_`short_var_name'_controls)
+	mat grc_`short_var_name'_mat_controls = real(r(min_phi23)),real(r(max_phi23)) \ real(r(min_phi24)),real(r(max_phi24)) \ real(r(min_phi25)),real(r(max_phi25)) \ real(r(min_phi26)),real(r(max_phi26)) \ real(r(min_phi27)),real(r(max_phi27)) \ real(r(min_phi_joint)),real(r(max_phi_joint))
 
-	estadd local controls "Yes" : grc_controls_int
-	estadd local interacted = "Yes" : grc_controls_int
+	estadd local controls "Yes" : grc_`short_var_name'_controls
+	estadd local interacted = "No" : grc_`short_var_name'_controls
 
-	esttab grc grc_controls grc_controls_int using "$root/results/tables/grc_`var'.tex", ///
-	keep(*trajectory*) drop(0.trajectory) mtitles("``i''" "``i''" "``i''") star(* 0.10 ** 0.05 *** 0.01) tex replace s(N controls interacted, label("Observations" "Controls" "Interact w/ Hybrid")) ///
-	coeflabels(`coeflabels') substitute(\_ _) se nogaps compress 
+	grc_weak_id_inference ln_`var', h(impmaize) min(-10) max(10) inc(0.01) hhid(household_id) test("base") base(2) controls(`controls' `interactions') progress(1) store(grc_`short_var_name'_controls_int)
+	mat grc_`short_var_name'_mat_controls_int = real(r(min_phi23)),real(r(max_phi23)) \ real(r(min_phi24)),real(r(max_phi24)) \ real(r(min_phi25)),real(r(max_phi25)) \ real(r(min_phi26)),real(r(max_phi26)) \ real(r(min_phi27)),real(r(max_phi27)) \ real(r(min_phi_joint)),real(r(max_phi_joint))
 
-	mat grc_mat_`var' = grc_mat, grc_mat_controls, grc_mat_controls_int */
+	estadd local controls "Yes" : grc_`short_var_name'_controls_int
+	estadd local interacted = "Yes" : grc_`short_var_name'_controls_int
+
+	mat grc_mat_`short_var_name' = grc_`short_var_name'_mat, grc_`short_var_name'_mat_controls, grc_`short_var_name'_mat_controls_int
 
 }
 
+esttab grc_cropcutdr grc_cropcutdr_controls grc_cropcutdr_controls_int grc_selfr_tr grc_selfr_tr_controls grc_selfr_tr_controls_int using "$root/results/tables/grc.tex", ///
+keep(*trajectory*) drop(0.trajectory) mtitles("Log Dry Cropcuts" "Log Dry Cropcuts" "Log Dry Cropcuts" "Log Self-Report" "Log Self-Report" "Log Self-Report") star(* 0.10 ** 0.05 *** 0.01) tex replace s(N controls interacted, label("Observations" "Controls" "Interact w/ Hybrid")) ///
+coeflabels(`coeflabels') substitute(\_ _) se nogaps compress 
 
 mata 
 
-grc_mat_YIELD_cropcutdry_tr = st_matrix("grc_mat_YIELD_cropcutdry_tr")
-grc_mat_YIELD_selfr_tr = st_matrix("grc_mat_YIELD_selfr_tr")
+grc_mat_YIELD_cropcutdry_tr = st_matrix("grc_mat_cropcutdr")
+grc_mat_YIELD_selfr_tr = st_matrix("grc_mat_selfr_tr")
 
 cropcut = J(6,3,"")
 self = J(6,3,"")
@@ -362,6 +359,25 @@ pdf = df.assign(when_adopt_1 = lambda df: (df.index.str[0].astype(int)==1).astyp
 returns   = Matrix.get("returns")
 pdf_returns = pdf.assign(returns = np.array(returns[0]))
 
+# Raw theta plot
+
+fig, ax = plt.subplots(2,1, sharex=True)
+
+pdf_returns['theta'].plot.bar(ax=ax[0])
+pdf_returns['returns'].plot.bar(ax=ax[1])
+
+ax[0].axhline(0, color='black')
+ax[1].axhline(0, color='black')
+
+ax[0].set_ylabel(r"Comparative Advantage ($\theta$)")
+ax[1].set_ylabel("Returns ($\Delta$)")
+ax[1].set_xlabel("Trajectory")
+
+
+plt.tight_layout()
+
+plt.savefig("${root}/results/figures/theta.png", dpi=160)
+
 # Adoption year plot
 
 fig, ax = plt.subplots(2,3, sharey=True, sharex=True)
@@ -375,8 +391,8 @@ for a in ax.flatten():
 	a.axhline(0, color='black')
 	a.set_xticklabels(["No", "Yes"])
 
-ax[0,0].set_ylabel("Comparative Advantage")
-ax[1,0].set_ylabel("Returns")
+ax[0,0].set_ylabel(r"Comparative Advantage ($\theta$)")
+ax[1,0].set_ylabel("Returns ($\Delta$)")
 
 ax[1,0].set_xlabel("Did HH adopt in Wave 1?")
 ax[1,1].set_xlabel("Did HH adopt in Wave 2?")
@@ -397,8 +413,8 @@ ax[1].set_xlabel("Number of Times Adopted")
 ax[0].axhline(0, color='black')
 ax[1].axhline(0, color='black')
 
-ax[0].set_ylabel("Comparative Advantage")
-ax[1].set_ylabel("Returns")
+ax[0].set_ylabel(r"Comparative Advantage ($\theta$)")
+ax[1].set_ylabel("Returns ($\Delta$)")
 
 for label in ax[1].get_xticklabels():
     label.set_rotation(0) 
