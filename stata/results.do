@@ -421,6 +421,6 @@ for label in ax[1].get_xticklabels():
 
 plt.tight_layout()
 
-plt.savefig("${root}/results/figures/traj_sum.png", dpi=160)
+plt.savefig("${root}/results/figures/traj_sum.png", dpi=160) 
 
 end
