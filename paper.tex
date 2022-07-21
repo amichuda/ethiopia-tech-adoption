@@ -352,7 +352,7 @@ In order to calculate comparative advantage, there must be evidence for the LCA 
 % }
 
 
-Figure \ref{fig:theta_delta_raw} shows a plot of the comparative advantages and returns for the cropcut model with controls. We can see here that returns are very high for the $(0,0,1)$ trajectory, but with an exceedingly negative comparative advantage. Conversely, all trajectories that adopted in the first wave have a positive comparative advantage, but negative returns. This is indicative of either negative sorting (consistent with the negative $\phi$ parameter that we found with the weak identification results) or with a systematic problem in adoption in the first year. 
+Figure \ref{fig:theta_delta_raw} shows a plot of the comparative advantages and returns for the cropcut model with controls. For the most part these results highlight two interesting puzzles: that it would seem that for many trajectories, comparative advantage is either very close to 0, implying that there is no difference between farmers that adopt and not adopt, and that for trajectory $(0,1,1)$, it would seem that comparative advantage is exceedingly negative. This is peculiar, as it this would imply that farmers that adopted in both waves 2 and 3, would actually be better off not adopting, even though their returns are positive (as shown in the bottom figure). Another peculiarity in this figure is that it would seem that if we compare trajectories that only differ by one wave's adoption, comparative advantage and returns seem to fall. For example, the transition from $(0,1,0)$ to $(0,1,1)$ leads to a large fall in comparative advantage. The same can be seen less starkly for the move from $(1,0,0)$ to $(1,0,1)$ and $(1,1,0)$ to $(1,1,1)$. But despite this loss in comparative advantage, returns seem to increase. This seems to imply that adopting more often leads to higher comparative advantage, but slightly higher returns. 
 
 \begin{figure}
     \centering
@@ -370,33 +370,20 @@ Figure \ref{fig:theta_delta_raw} shows a plot of the comparative advantages and 
     \end{table}
 \end{figure}
 
-This is illustrated in Figure \ref{fig:when_adopt}, where we calculate an aggregation for comparative advantage and returns whether a household adopted in each wave. We can see here that adopting in the first wave is consistent with a positive comparative advantage, but negative returns. This is repeated, but less strongly in wave 2. This means that for waves 1 and 2, households have gains to adopting, but actually receive negative returns to doing so. This is indicative of the fact that there are barriers to those that adopted in waves 1 and 2, or perhaps, that returns from improved seed are not as high as expected. This relationship is reversed in the third wave, albeit both comparative advantage and returns are close to 0. Figure \ref{fig:when_adopt} provides a curious trend across time to adoption: it would seem that negative returns to adoption reduce across time, but adoption-specific advantages in households also get smaller.
+To explore this further, we run a similar regression to calculate the comparative advantage of adopting a certain number of times. This is similar to Eq. \ref{eq:GRC_Suri}, but uses the number of times that a household adopted hybrid maize (here, $NAdopt$), not its trajectory.
 
+\begin{align}
+y_{it}&=\sum_{\underline{na}\in\mathcal{NA}\backslash 3}\nu_{\underline{h}}+\Delta_{(0,0,1)}h_{it}+\phi(\nu_{(0,0,1)}-\nu_{(0,0,1)})_{it}1\{NAdopt_{i}=1\}\nonumber\\
+&~~~+\left(\nu_{(1,1,1)}+\phi\left(\nu_{(1,1,1)}-\nu_{(0,0,1)}\right)\right)h_{it}1\{NAdopt_{i}=3\} + X_{it}\beta +\varepsilon_{it},\label{eq:GRC_NAdopt}
+\end{align}
 
-\begin{figure}
-    \caption{Aggregation Results: Comparative Advantage and Returns by Wave of Adoption (Dry Cropcuts)}
-    \label{fig:when_adopt}
-    \centering
-    \includegraphics[scale=0.75]{results/figures/when_adopt_cropcut.png}
-    \vspace*{-2em}
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{p{0.9\textwidth}} 
-            \begin{tablenotes}
-                  \small
-                  \item Note: Author's calculations using ESS. The figures shows the aggregate impact from Table \ref{tbl:unres} using on which period a person adopted as the basis for the aggregation.
-            \end{tablenotes}
-        \end{tabular}
-    \end{table}
-\end{figure}
-
-Figure \ref{fig:traj_sum} provides another aggregation of returns and comparative advantage using the times a household adopted hybrid maize. Adopting 0 times leads to negative comparative and advantage and negative returns makes sense. Those that do not adopt would not receive benefits from adopting. However, those that adopt once during waves 1-3, see a positive comparative advantage, but negative returns. This same is also starkly true for those that adopted three times. For those that adopted twice, it would seem that comparative advantage is negative and there are negative returns to adoption. The lack of a pattern in Figure \ref{when_adopt} seems to suggest that the number of times adopting is not as conclusive as \emph{when} households adopted. Specifically, later adoption periods lead to smaller negative comparative advantages and less negative returns. This suggests that the value of adopting is getting higher, and that this may be due to the introduction of newer and more effective seed.
+In this, instead of a set of trajectories, we have a set of the number of times adopted $\mathcal{NA}$. $\nu$ denotes the average yield from adoption $na$ times. We use adopting once as the base. Figure \ref{fig:n_adopt} shows the results of the regression and calculation of comparative advantage. As expected, adopting 0 times leads to negative comparative advantage, but with positive returns to adoption, implying that there is value to adopting to those that have never adopted hybrid maize seed. Adopting once leads to both positive comparative advantage, and positive returns to adoption. However, adopting twice actually leads to negative comparative advantage, and less positive returns. Adopting all three times leads to positive comparative advantage, but negative returns.
 
 \begin{figure}
     \centering
     \caption{Aggregation Results: Comparative Advantage and Returns by the Number of Times Adopted (Dry Cropcuts)}
-    \label{fig:traj_sum}
-    \includegraphics[scale=0.75]{results/figures/traj_sum.png}
+    \label{fig:n_adopt}
+    \includegraphics[scale=0.75]{results/figures/num_adoption.png}
     \vspace*{-2em}
     \begin{table}[H]
         \centering
@@ -433,7 +420,11 @@ To further disaggregate the results, we explore the source of the improved varie
 
 \subsection{Misclassification-Robust GRC}
 
-The previous results highlight the fact that the definition of hybrid matters. Even when households 
+The previous results highlight the fact that the definition of hybrid matters. Even when households think they are not adopting hybrid maize seed, there is such a large amount of hybrid seed that has been introduced over the years in Ethiopia that farmers may be misclassifying their seed and taking part in sub-optimal growing strategies as a result. For instance, if a farmer thinks they are growing tradition seed, but they are actually growing hybrid seed, then they will tend to have low returns; hybrid seeds ofte require more fertilizer and other inputs to work optimally. If they are cultivated like traditional seeds, then their performance may end up being worse.
+
+Misclassification of seed is not just a problem in Ethiopia. Countries have been subsidizing inputs and seed for decades and many countries might have the same challenges. In this section, we will introduce a misclassification-robust approach to the GRC method that will allow us to take misclassification into account when calculating comparative advantage. The results from the previous section highlight that there are many definitions to hybrid seed and the fourth wave of the ESS includes DNA fingerprinting. This gives us the ability to validate how often a hybrid seed is actually used when a farmers self-reports adopting hybrid seed. The methodology in this section builds on work that was done in \cite{michuda2021three}, which used confusion matrices from machine learning algorithms as a way to estimate an causal effect that was robust to misclassification. Although, the ESS data does not have results from machine learning algorithms, we can construct a confusion matrix based on the DNA fingerprinting data in the fourth wave and apply it to the previous three waves.
+
+
 
 
 \section{Conclusion}\label{sec:conclusion}
