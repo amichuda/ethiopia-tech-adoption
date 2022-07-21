@@ -1,7 +1,7 @@
 clear all 
 
 if "`c(username)'" == "lordflaron" {
-	global root = "/home/lordflaron/Documents/ethiopia-tech-adoption/"
+	global root = "/Users/lordflaron/Documents/ethiopia-tech-adoption"
 }
 
 else {
@@ -177,16 +177,16 @@ forval i=1/7 {
 local coeflabels `coeflabels' 8.trajectory#1.impmaize "$\kappa_{111}$"
 
 
-foreach var of varlist YIELD_cropcutdry_tr YIELD_selfr_tr {
+foreach var of varlist YIELD_selfr_tr YIELD_cropcutdry_tr{
 
 	if "`var'" == "YIELD_cropcutdry_tr" {
-		matrix define initval = (0, 6,6,6,6, 6,6,5,-1,1,-1,2,3,5,7,4,3,3)
+		matrix define initval = (6, 6,6,6,6, 6,6,5,-1,1,-1,2,3,5,7,4,3,3)
 		
 		gmm     	(ln_`var' - {mu: i($noalways).trajectory} ///              	
 					- {Delta}*(1.impmaize)  /// 
 					- {phi}*(`switcherpars')            ///
 					- ({mu_always} + {phi}*({mu_always}                     ///
-					- {mu:2.trajectory}))*($always.trajectory#1.impmaize) -{xb: `controls' })    ///
+					- {mu:2.trajectory}))*($always.trajectory#1.impmaize) -{xb: `controls'})    ///
 					, instruments(i($noalways).trajectory 1.impmaize         ///
 					i($switchers $always).trajectory#1.impmaize `controls' , nocons)     ///
 					vce(cluster household_id)  winitial(identity) from(initval) 
@@ -224,6 +224,46 @@ foreach var of varlist YIELD_cropcutdry_tr YIELD_selfr_tr {
 esttab grc_cropcutdr grc_cropcutdr_controls grc_cropcutdr_controls_int grc_selfr_tr grc_selfr_tr_controls grc_selfr_tr_controls_int using "$root/results/tables/grc.tex", ///
 keep(*trajectory*) drop(0.trajectory) mtitles("Log Dry Cropcuts" "Log Dry Cropcuts" "Log Dry Cropcuts" "Log Self-Report" "Log Self-Report" "Log Self-Report") star(* 0.10 ** 0.05 *** 0.01) tex replace s(N controls interacted, label("Observations" "Controls" "Interact w/ Hybrid")) ///
 coeflabels(`coeflabels') substitute(\_ _) se nogaps compress title(Unrestricted Model of Dry Cropcuts and Self-reported Yields \label{tbl:unres})
+
+**** Create New trajectory variables
+
+* First we do number of times adopted
+egen num_adoption = sum(impmaize), by(household_id holder_id)
+
+global          never 1
+tab             num_adoption
+
+global          always 4
+global          lastswitcher = 3
+
+numlist         "1(1)$lastswitcher"
+global          switchers `r(numlist)'
+
+numlist         "0(1)$lastswitcher"
+global          noalways `r(numlist)'
+
+/* We have to define a local with all the mu parameters
+	needed to identify \phi. */
+local           switcherpars ({mu:2.num_adoption} - ///
+					{mu:1.num_adoption})*(2.num_adoption#1.impmaize)
+
+foreach var of varlist YIELD_cropcutdry_tr  {
+
+	matrix define initval = (6.3,6.1,6.2, 0.1,0.2,0.3,0.1, 4,4,4,4,4,4,4)
+	
+		gmm     	(ln_`var' - {mu: ib3.num_adoption} ///              	
+					- {Delta}*(1.impmaize)  /// 
+					- {phi}*(`switcherpars')            ///
+					- ({mu_always} + {phi}*({mu_always}                     ///
+					- {mu:1.num_adoption}))*(3.num_adoption#1.impmaize) -{xb: `controls' })    ///
+					, instruments(ib3.num_adoption 1.impmaize         ///
+					i(1 2 3).num_adoption#1.impmaize `controls', nocons)     ///
+					vce(cluster household_id)  winitial(identity) from(initval) 
+				
+	estimates store num_adoption_model
+}
+
+ 
 
 mata 
 
@@ -284,7 +324,6 @@ end
 
 
 // Generate Figure for Comparative Advantage
-
 python
 
 from sfi import Matrix, Data
@@ -340,12 +379,11 @@ mat returns[1,`i'] = r(b)
 }
 }
 
-
 python
 
-import matplotlib
+#import matplotlib
 
-matplotlib.use('TkAgg')
+#matplotlib.use('TkAgg')
 
 df = pd.DataFrame(Matrix.get("theta_i_t"), index = Matrix.getRowNames("theta_i_t"), columns = Matrix.getColNames("theta_i_t"))
 
@@ -366,6 +404,8 @@ fig, ax = plt.subplots(2,1, sharex=True)
 pdf_returns['theta'].plot.bar(ax=ax[0])
 pdf_returns['returns'].plot.bar(ax=ax[1])
 
+pdf_returns.to_csv("${root}/results/data/theta.csv")
+
 ax[0].axhline(0, color='black')
 ax[1].axhline(0, color='black')
 
@@ -378,49 +418,81 @@ plt.tight_layout()
 
 plt.savefig("${root}/results/figures/theta.png", dpi=160)
 
-# Adoption year plot
-
-fig, ax = plt.subplots(2,3, sharey=True, sharex=True)
-
-for when, a_col in zip(['when_adopt_1', 'when_adopt_2', 'when_adopt_3'], ax.transpose()):
-	pdf_returns.groupby(when).mean()['theta'].plot.bar(ax=a_col[0],  color=['tab:green', 'tab:blue'])
-	pdf_returns.groupby(when).mean()['returns'].plot.bar(ax=a_col[1],  color=['tab:green', 'tab:blue'])
+end
 
 
-for a in ax.flatten():
-	a.axhline(0, color='black')
-	a.set_xticklabels(["No", "Yes"])
+estimates restore num_adoption_model
 
-ax[0,0].set_ylabel(r"Comparative Advantage ($\theta$)")
-ax[1,0].set_ylabel("Returns ($\Delta$)")
+ereturn list
 
-ax[1,0].set_xlabel("Did HH adopt in Wave 1?")
-ax[1,1].set_xlabel("Did HH adopt in Wave 2?")
-ax[1,2].set_xlabel("Did HH adopt in Wave 3?")
+tab num_adoption, matcell(num_adoption_weights)
 
-plt.tight_layout()
 
-plt.savefig("${root}/results/figures/when_adopt_cropcut.png", dpi=160)
 
-# Adoption Sum Plot
+mata
+
+num_adoption_weights = st_matrix("num_adoption_weights")
+b = st_matrix("e(b)")
+
+num_adoption_weights = num_adoption_weights/sum(num_adoption_weights)
+
+mu = b[1..3], b[7]
+e_theta = J(1, 4, mu*num_adoption_weights)
+
+theta_i = mu - e_theta
+
+st_matrix("theta_i", theta_i)
+
+end
+
+mat theta_i_t = theta_i'
+
+mat rownames theta_i_t = "0" "1" "2" "3" 
+
+mat colnames theta_i_t = "theta"
+
+mat returns  = J(1,4,.)
+forval i=0/3 {
+if `i'==1 {
+mat returns[1,2] = _b[Delta:_cons]
+continue
+}
+if `i' == 3 {
+nlcom (_b[phi:_cons]*(_b[mu_always:_cons] - _b[mu:1.num_adoption]) - _b[Delta:_cons])
+mat returns[1,4] = r(b)
+}
+else{
+nlcom (_b[phi:_cons]*(_b[mu:`i'.num_adoption] - _b[mu:1.num_adoption]) - _b[Delta:_cons])
+mat returns[1,`=`i'+1'] = r(b)
+}
+}
+
+python
+
+df = pd.DataFrame(Matrix.get("theta_i_t"), index = Matrix.getRowNames("theta_i_t"), columns = Matrix.getColNames("theta_i_t"))
+
+returns   = Matrix.get("returns")
+pdf_returns = df.assign(returns = np.array(returns[0]))
+
+# Raw theta plot
 
 fig, ax = plt.subplots(2,1, sharex=True)
 
-pdf_returns.groupby('traj_sum').mean()['theta'].plot.bar(ax=ax[0])
-pdf_returns.groupby('traj_sum').mean()['returns'].plot.bar(ax=ax[1])
+pdf_returns['theta'].plot.bar(ax=ax[0])
+pdf_returns['returns'].plot.bar(ax=ax[1])
 
-ax[1].set_xlabel("Number of Times Adopted")
+pdf_returns.to_csv("${root}/results/data/num_adoption.csv")
+
 ax[0].axhline(0, color='black')
 ax[1].axhline(0, color='black')
 
 ax[0].set_ylabel(r"Comparative Advantage ($\theta$)")
 ax[1].set_ylabel("Returns ($\Delta$)")
+ax[1].set_xlabel("Trajectory")
 
-for label in ax[1].get_xticklabels():
-    label.set_rotation(0) 
 
 plt.tight_layout()
 
-plt.savefig("${root}/results/figures/traj_sum.png", dpi=160) 
+plt.savefig("${root}/results/figures/num_adoption.png", dpi=160)
 
 end

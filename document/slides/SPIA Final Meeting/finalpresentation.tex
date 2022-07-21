@@ -1,6 +1,6 @@
 \documentclass{beamer}
 \usepackage[utf8]{inputenc}
-
+\usepackage{threeparttable}
 %\usepackage{utopia} %font utopia imported
 
 \usepackage{amsthm, booktabs, setspace, natbib, amsfonts,amssymb,epstopdf,textcomp,listings, xcolor}
@@ -66,17 +66,15 @@
 Comparative Advantage of Adoption in Ethiopia}
 
 
-\author[et al]{Michuda, Chiarella, Barriga-Cabanillas, Correa, }
+\author[et al]{Aleksandr Michuda \\ Cristina Chiarella \\Oscar Barriga-Cabanillas \\Juan Correa }
 
-% {Oscar Barriga-Cabanillas\inst{1} \\
-% (with Travis Lybbert\inst{2})}
 
-\institute[UC Davis] % (optional)
-{
-%  \inst{1}%
-  Agricultural and Resource Economics\\
-  UC Davis
- }
+% \institute[UC Davis] % (optional)
+% {
+% %  \inst{1}%
+%   Agricultural and Resource Economics\\
+%   UC Davis
+%  }
 
 \date[January 2022] % (optional)
 {CGIAR-SPIA \\
@@ -157,13 +155,13 @@ January, 2022}
 Food security is a major challenge: Ethiopia is no exception
 
 \begin{itemize}
-    \item Struggled to provide an adequate and reliable food supply
+    % \item Struggled to provide an adequate and reliable food supply
     \item Breakthroughs in maize germplasm ($\uparrow$ yields, $\uparrow$ drought tolerance)
 \end{itemize}
 
 However adoption of improved seed has remained a challenge
 
-\begin{enumerate}
+\begin{enumerate}[ {[}1{]} ]
     \item Market integration
     \item Access to supplementary inputs
     \item Agro-ecological considerations
@@ -171,32 +169,51 @@ However adoption of improved seed has remained a challenge
 
 \textbf{We study how heterogeneity masks the true impact of adoption}
 
-\begin{enumerate}
-    \item Adoption where  net benefits are the highest
-    \item How adaptation strategies augment comparative advantage in adoption
-    \item Drivers of dis-adoption of improved maize seed
+\begin{enumerate}[ {[}1{]} ]
+    \item Explore heterogeneous comparative advantages through GRC: find puzzling no significant results.
+    \item Compare definitions of improved seeds: self-reported, second generation or recycled, purity of genetic material, year of release, types and source.
+    \item Low adoption of newer and purest varieties, which do return in higher yields. Poor farmers paying a premium for genetically diluted improved varieties.
 \end{enumerate}
 
+\end{frame}
 
+%---------------------------------------------------------
+\begin{frame}
+\frametitle{Data}
 
- 
+\begin{itemize}
+    % \item Struggled to provide an adequate and reliable food supply
+    \item We focus on maize producing households 
+    \item Self-reported use of improved seed varieties
+    \item Compare self-reported and cropcut yields
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=.4]{results/figures/map_hhids.pdf}
+\end{figure}
+
+% \textit{Add interesting image}
 \end{frame}
 
 
 %---------------------------------------------------------
 \begin{frame}
-\frametitle{Empirical Strategy I}
+\frametitle{Empirical Strategy I: Finding the returns from adoption}
 
-Correlated Random Coefficient Model and comparative advantage (Suri 2011; Tjernstr\"{o}m et al. 2020; Michler et al. 2019; Barriga et al. 2018)
-
-
+\textbf{Understand the returns of adopting improved varieties: }
 \begin{itemize}
-    \item Farmers face unobservable heterogeneous returns to adoption (comparative advantage)
+    \item Some farmers have higher returns to adoption (comparative advantage)
+    \item How comparative advantage plays a role on using improved seed varieties.
 \end{itemize}  
 
+% (Suri 2011; Tjernstr\"{o}m et al. 2020; Michler et al. 2019; Barriga et al. 2018)
+
+We use a Correlated Random Coefficient Model:
+\vspace{-2em}
 \begin{center}
 $$
-    y_{it}= \delta + \beta h_{it} + \theta_{i} + \phi\theta h_{it} + \tau_{i} + \epsilon_{it}
+    y_{it}= \delta + \Delta h_{it} + \theta_{i} + \phi\theta h_{it} + \tau_{i} + \epsilon_{it}
 $$  
 \end{center}
 
@@ -204,8 +221,9 @@ $$
     \item $y_{it}$: yields or profits for household i at time t
     \item $h$:  indicator for adoption
     \item $\tau$:  household’s absolute advantage
-    \item $\theta$: household’s comparative advantage
-    \item $\phi$: Gains from adopting, relative to a household’s comparative advantage. 
+    \item \textbf{$\theta$: household’s comparative advantage}
+    \item \textbf{$\Delta$: The marginal effect of adoption}
+    \item $\phi$: Gains from adopting, relative to a household’s comparative advantage.
 \end{itemize}
 
 \end{frame}
@@ -213,33 +231,66 @@ $$
 
 %---------------------------------------------------------
 \begin{frame}
-\frametitle{Empirical Strategy II and Extensions}
+\frametitle{Empirical Strategy I: Finding the returns from adoption}
 
 Advantages:
 \begin{enumerate}
-    \item Identification does not rely on the existence of a valid instrumental variable (linear projection of observed adoption history)
-    \item Disentangles a household’s absolute advantage from comparative advantage in adopting. 
+    \item Identification does not rely on a IV 
+    % (linear projection of observed adoption history)
+    \item Disentangles absolute advantage from comparative advantage in adoption. ($\theta_i = \theta_A - \theta_N$)
 \end{enumerate}
 
-Extending the model:
+\input{results/tables/traj}
 
-\begin{itemize}
-    \item Implementing a nonparametric panel identification in a novel GRC (Group Random Coefficients)
-    \item Modeling and incorporating time-varying characteristics 
-    \item Complement ESS data with precipitation (CHIRPS) and temperature (CPC) data
-\end{itemize}  
+% Extending the model:
+
+% \begin{itemize}
+%     \item Implementing a nonparametric panel identification in a novel GRC (Group Random Coefficients)
+%     \item Modeling and incorporating time-varying characteristics 
+%     \item Complement ESS data with precipitation (CHIRPS) and temperature (CPC) data
+% \end{itemize}  
 \end{frame}
 
 
 %---------------------------------------------------------
 %---------------------------------------------------------
 \begin{frame}
-\frametitle{Group Random Coefficients Results}
+\frametitle{Empirical Strategy II: Returns to Different Types of Hybrid}
+% \frametitle{Group Random Coefficients Results}
+\textbf{Why farmers do \textit{(not)} adopt?}
 
+\begin{enumerate}
+    \item There are negative returns from adoption
+    \item Comparative advantage is close to 0 unless you always adopt (perhaps driven by 
+\end{enumerate}
+
+\begin{figure}
+    \centering
+    \label{fig:traj_sum}
+    \includegraphics[scale=.4]{results/figures/traj_sum.png}
+\end{figure}
  
 \end{frame}
 
 %---------------------------------------------------------
+
+%---------------------------------------------------------
+\begin{frame}
+\frametitle{Endogenous Switching Regression Results}
+
+Why do we see farmers adopting despite the seemingly small negative returns?
+
+\begin{itemize}
+    \item We use the DNA-fingerprinting to shed light on this puzzle
+    \item DNA allows us to assess what varieties (and purity) farmers are using 
+    \item Unfortunately, only available in the last round
+\end{itemize}
+
+We implement a switching regression approach
+
+\end{frame}
+%---------------------------------------------------------
+
 
 %---------------------------------------------------------
 \begin{frame}
@@ -254,16 +305,41 @@ Extending the model:
 %---------------------------------------------------------
 \begin{frame}
 \frametitle{Discussion}
-
+Negative and small returns to adoption from self-reported improved varieties.
 \begin{itemize}
-    \item Negative returns to adoption from self-reported improved varieties.
     \item But positive returns to more genetically pure, DTMZ, CG- sourced and newer varieties.
     \item All DNA fingerprints are 70\% pure or higher. Control group has high share of false positives: no proper control. 
-    \item Negative results from GRC mask a large heterogeneity in returns to adoption.
-\end{itemize}  
+    
+\end{itemize}
+Negative GRC results mask a large heterogeneity in returns to adoption. 
+\begin{itemize}
+    \item Low purchase of newly bred hybrids, diluted DNA, low inputs use.
  
+\end{itemize}  
+
+Effects of high-yielding varieties diminishes over time, but traditional varieties are well adapted to local agro-ecological conditions.
+
+\begin{itemize}
+    \item There may be a threshold in time above which it may be more profitable to use a traditional variety than an improved one that has been around for too many generations. 
+
+\end{itemize}
+
+
 \end{frame}
 
 %---------------------------------------------------------
+\begin{frame}{}
+    Thank you!
+\end{frame}
+
+\begin{frame}{Raw Trajectories}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=.5]{results/figures/theta.png}
+    \end{figure}
+\end{frame}
+
+
+\bibliography{references}
 
 \end{document}

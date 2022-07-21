@@ -1,8 +1,8 @@
 program define grc_weak_id_inference, rclass
-    version 16.0
-    syntax varname [if], hhid(varname) Hybrid(varname) MIn(integer) MAx(integer) INCrement(real) [STORE_results(name) progress(integer 1) path(string) TEST_type(string) type_one(real 0.05) ADD_post(string) controls(varlist fv) BASEgroup(integer 2)]
-    /*
-        Program that carries out a brute force search for phi for an outcomes `varname', with household ID `hhid', and
+    version 15.0
+    syntax varname [if], hhid(varname) Hybrid(varname) MIn(real) MAx(real) INCrement(real) [STORE_results(name) progress(integer 1) path(string) TEST_type(string) BASEgroup(integer 2) type_one(real 0.05) ADD_post(string) controls(varlist fv)]
+    /*  
+        Program that carries out a brute force search for phi for an outcome `varname', with household ID `hhid', and
         hybrid variable `hybrid', and optionally, controls `controls'.
 
         The program creates a grid from `min' to `max' with an increment of `increment'. Optionally you can set the 
@@ -17,7 +17,36 @@ program define grc_weak_id_inference, rclass
         3. "base" : This test separate restrictions against a base group `base_group', set by the number of the trajectory.
             (run tab trajectory, to see which number to use)
 
-        Optionally you can save to `path'
+        Store estimates by adding a name to `store_results'
+
+        if `progress' is chosen, will omit output from the test command and show dots for each test that is run.
+
+        Optionally save to `path'
+
+        Args:
+            varname: The dependent variable to be used in the regression
+            hhid(varname): The household id. Used for clustering SE for auxiliary regression
+            hybrid(varname): the binary variable of adoption
+            min(real): The left endpoint of the grid
+            max(real): The right endpoint of the grid
+            increment(real): How finely to break up the grid
+            store_results(name, optional): use store the auxiliary regression estimates with `name' for later use
+            progress(integer, optional): Whether to show the output of each test that is run or show dots on the screen. Default to true.
+            path(string, optional): where to save the results of the simulation
+            test_type(string, optional): The type of test to run, described above.
+            basegroup(integer, optional): the basegroup to use with test_type "base"
+            type_one(real, optional): The Type-I error of the test. Defaults to 0.05
+            add_post(string, optional): Optionally save another parameter to the simulation dataset. Only for use with `path'
+            controls(varlist, optional): Optionally include controls into the regression
+
+        Returns:
+            r(min_phi`i'`j'): The minimum phi that failed to reject the test; the left side of the confidence interval for `phi', for switching trajectories `i' and `j'
+            r(max_phi`i'`j'): The maximum phi that failed to reject the test; the right side of the confidence interval for `phi', for switching trajectories `i' and `j'
+            r(min_phi_joint): The minimum phi that failed to reject the test of the joint test of all switching trajectories
+            r(max_phi_joint): The maximum phi that failed to reject the test of the joint test of all switching trajectories
+            r(table): The table of regression results
+
+
     */
 
     * Get post file for saving p-values
@@ -71,25 +100,11 @@ program define grc_weak_id_inference, rclass
                     `controls' ///
                     `if', vce(cluster `hhid') nocons
 
-        estimates store `store_results'
-        * Grab matrix of parameter estimates
-        matrix          ols_init = e(b)
+        if "`store_results'" != "" {
+            estimates store `store_results'
+        }
+        
 
-        /* * Run gmm
-        gmm     	(`varlist' - {mu: i(`noalways').trajectory}       ///
-                    - {Delta: i(`switchers').trajectory#1.`hybrid'} ///
-                    - {mu_111: i(`always').trajectory#1.`hybrid'}
-                       `controls_gmm_exp') ///
-                    `if', instruments(i(`noalways').trajectory 			///
-                    i(`switchers').trajectory#1.`hybrid' `controls', nocons) 		///
-                    vce(cluster `hhid') from(ols_init) winitial(identity)  conv_maxiter(2000)
-
-	
-    matrix          gmm_init = e(b) */
-	
-	
-    // pause on
-    // pause 
     qui ereturn list
     return add
     
@@ -120,6 +135,7 @@ program define grc_weak_id_inference, rclass
             }
             `qui' test `test_string'
             qui return list
+            
             loc p_v = r(p)
             post `memhold' (`phi_potential') (`p_v') (.) (.) (.) (.) (.) ("`test_type'") ("`add_post'") 
 
@@ -144,7 +160,6 @@ program define grc_weak_id_inference, rclass
                 if `i' == `basegroup' {
                     continue
                 }
-                /* di `basegroup' */
                 local test_string ((`i'.trajectory#1.`hybrid'-`basegroup'.trajectory#1.`hybrid') = `phi_potential'*(`i'.trajectory-`basegroup'.trajectory)) `test_string'
                 `qui' test ((`i'.trajectory#1.`hybrid'-`basegroup'.trajectory#1.`hybrid') = `phi_potential'*(`i'.trajectory-`basegroup'.trajectory))
                 scalar p_v_`i' = r(p)
