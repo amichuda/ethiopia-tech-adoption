@@ -19,9 +19,9 @@
 \usepackage{setspace}
 \usepackage{afterpage}
 \doublespacing
+\usepackage{subcaption}
 \usepackage{subfig}
 \usepackage{epigraph}
-
 \usepackage{enumerate}
 \usepackage{tabularx}
 \usepackage{fancyhdr}
@@ -424,8 +424,62 @@ The previous results highlight the fact that the definition of hybrid matters. E
 
 Misclassification of seed is not just a problem in Ethiopia. Countries have been subsidizing inputs and seed for decades and many countries might have the same challenges. In this section, we will introduce a misclassification-robust approach to the GRC method that will allow us to take misclassification into account when calculating comparative advantage. The results from the previous section highlight that there are many definitions to hybrid seed and the fourth wave of the ESS includes DNA fingerprinting. This gives us the ability to validate how often a hybrid seed is actually used when a farmers self-reports adopting hybrid seed. The methodology in this section builds on work that was done in \cite{michuda2021three}, which used confusion matrices from machine learning algorithms as a way to estimate an causal effect that was robust to misclassification. Although, the ESS data does not have results from machine learning algorithms, we can construct a confusion matrix based on the DNA fingerprinting data in the fourth wave and apply it to the previous three waves.
 
+\begin{table}[]
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{Hybrid DNA Purity $>$ 95\% \label{tab:a}}
+        \begin{tabular}{lll}
+        \toprule
+         & 0 & 1 \\
+        \midrule
+        0 & 0.863 & 0.137 \\
+        1 & 0.296 & 0.704 \\
+        \bottomrule
+        \end{tabular}
+        \vspace{1cm}
+    \end{subtable}%
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{DNA Fingerprinting for Drought-Tolerant Maize \label{tab:b}}
+        \begin{tabular}{lll}
+        \toprule
+         & 0 & 1 \\
+        \midrule
+        0 & 0.971 & 0.029 \\
+        1 & 0.868 & 0.132 \\
+        \bottomrule
+        \end{tabular}
+        \vspace{1cm}
+    \end{subtable} 
+    \begin{subtable}{\linewidth}
+        \centering
+        \caption{DNA Fingerprinting of Seed Released after 2010 \label{tab:c}}
+        \begin{tabular}{lll}
+        \toprule
+         & 0 & 1 \\
+        \midrule
+        0 & 0.859 & 0.141 \\
+        1 & 0.628 & 0.372 \\
+        \bottomrule
+        \end{tabular}
+    \end{subtable}
+    \caption{Misclassification Tables for Farmers' Adoption of Hybrid Seed \label{tab:misclassification}}
+    \begin{tablenotes}
+    \footnotesize
+    \item{Note: Table shows three different definitions for misclassifying adoption of hybrid maize. A 0(1)-row denotes that a farmer self-reported using traditional(hybrid) seed. A 0(1)-column is whether the seed was in fact traditional(hybrid). All definitions calculated from ESS data. Sub-table \ref{tab:a} shows the percentage that farmers self-reported using hybrid seed when that seed was at least 95\% pure. Sub-table \ref{tab:b} shows the same table but for whether the seed was drought-tolerant maize seed. Sub-table \ref{tab:c} shows the same table but for hybrid seed released after 2010.}
+    \end{tablenotes}
+\end{table}
 
+Table \ref{tab:misclassification} shows a table of different hybrid seed definitions and the percentage of times that a farmer self-reported traditional or hybrid seed, and whether they in fact were using traditional or hybrid seed, based on the DNA fingerprinting data. You can see from Sub-table \ref{tab:a} that around 86\% of farmers actually use traditional seed when they self-report using traditional seed, and around 70\% of the time, farmers use hybrid seed of at least 95\% purity when they self-report using hybrid. There are in fact instances where farmers, however, misclassify their self-reports. For instance, in sub-table \ref{tab:b}, a farmer that self-reports using drought-tolerant maize, only in fact uses drought-tolerant maize 13\% of the time. There are similarly large misclassifications for seed released after 2010. The previous section highlighted that different definition of maize could actually lead to vastly different treatment impacts from seed adoption. 
 
+In order to apply these misclassification probabilities to the previous three waves, we made assumptions about the nature of misclassification: that the rate of misclassification is constant across time and exhibits no dynamic behavior. Although these are strong assumptions, they come from the limitations of the data; the fourth wave of the ESS was the first to include DNA fingerprinting, and so was the first where a table like the one in Table \ref{tab:misclassification} could be calculated. Let $p_{ij}$ be the $i,j$th cell of a misclassification table as in Table \ref{tab:misclassification}. Suppose that we construct the probability of being in a true trajectory $h = (i,j,k)$, intersected with being in a reported trajectory $\hat{h} = (\hat{i},\hat{j}, \hat{k})$ as:
+
+\begin{equation}
+\label{eq:misclass}
+P(h = (i,j,k) , \hat{h} = (\hat{i},\hat{j}, \hat{k})) = p_{i, \hat{i}}\cdot p_{j, \hat{j}}\cdot p_{k, \hat{k}}
+\end{equation}
+
+We can use Eq. \ref{eq:misclass} to construct the joint distribution, $f(h, \hat{h})$ for each trajectory in the sample. Since we had the most confidence in the data from Table \ref{tab:a}, we decided to use it for the main body of the paper. 
 
 \section{Conclusion}\label{sec:conclusion}
 
@@ -433,17 +487,17 @@ Misclassification of seed is not just a problem in Ethiopia. Countries have been
 % - may be due to improved seed being more effective, but doesnt tell the whole story
 % - barrier to purchasing the seed and associated inputs for poorer households, leading to reuse of seeds and being less effective
 
-Our results showcase the challenges of identifying the returns to technology adoption when adoption is not promoted by a randomized control trial and when the characteristics of the technology (genetic purity) are not easily observed. We show that in the case of Ethiopia, the return to adoption of improved seed varieties appears to be negative, a result that we attempt to further understand by relying on seeds' DNA fingerprinting, obtained from the last round of the ESS. Accounting for the decay of the purity of the genetic material, its source and years upon release, reveals that those farmers that rely on newly bred improved varieties do show positive returns to adoption. Even without explicit DNA fingerprinting evidence, the GRC was able to show this trend with the comparative advantage results; returns are negative to those that have a high comparative advantage to adopting, but these returns less negative with time. We speculate that this is due to the fact that new and more genetically pure hybrids are introduced giving those that adopt higher yields than before.
+Our results showcase the challenges of identifying the returns to technology adoption when adoption is not promoted by a randomized control trial and when the characteristics of the technology (genetic purity) are not easily observed. We show that in the case of Ethiopia, the return to adoption of improved seed varieties appears to be negative, a result that we attempt to further understand by relying on seeds' DNA fingerprinting, obtained from the last round of the ESS. Accounting for the decay of the purity of the genetic material, its source and years upon release, reveals that those farmers that rely on newly bred improved varieties do show positive returns to adoption. Even without explicit DNA fingerprinting evidence, the GRC could show this trend with the comparative advantage results; returns are harmful to those with a high comparative advantage to adopt, but these returns are less negative with time. We speculate that this is due to the fact that new and more genetically pure hybrids are introduced giving those that adopt higher yields than before.
 
 But the fact that newly bred hybrids that adapted to local conditions outperform local varieties and older-generation improved seeds is not surprising given the large investments devoted to improve seed performance and the speed at which new high-yielding varieties are being developed. The results from the Group Random Coefficient model highlights how the fact that we imperfectly observe the use of newly improved seeds and the degree of mis-classification between self-reported improved seeds and bred hybrids may partially explain why we do not see self-reported improved varieties grant positive returns to adoption. Reconciling these findings with the results from the Endogenous Switching Regression, we hypothesize that the negative returns to adoption mask a large heterogeneity in the returns to adoption. The switching results show that the positive returns to adoption only appear for those farmers using newly bred hybrid seeds provided directly by distributors. 
 
-This result buttresses the fact that a large share of farmers are not able to obtain the promised greater yields from using hybrid varieties. This may be partially driven by the low-purchasing rates of newly bred varieties, but also by the under-use of critical inputs needed for the successful performance of hybrid seeds, such as fertilizers and irrigation, especially in drought-prone areas. More research is needed to understand the barriers to adoption and input use. Such barriers may be crucial for households with less resources, which might be more likely to reuse improved seeds for many generations or buy older-generations from other farmers at a cheaper price. The fact that all the sampled plots chosen for DNA fingerprinting showed purity percentages of 70 percent or higher is indicative that this might be the case, given the widespread dilution of improved genetic material. Such dispersion of improved genetic material also poses a challenge for the proper identification of the returns to adoption as it confounds the potential benefits of locally adapted hybrids, but also the benefits of traditional local varieties that may be better suited for certain agro-ecological conditions and for contexts of low-input use.  
+This result buttresses the fact that a large share of farmers are not able to obtain the promised greater yields from using hybrid varieties. This may be partially driven by the low-purchasing rates of newly bred varieties, but also by the under-use of critical inputs needed for the successful performance of hybrid seeds, such as fertilizers and irrigation, especially in drought-prone areas. More research is required in order to understand the barriers to adoption and input use. Such barriers may be crucial for households with less resources, which might be more likely to reuse improved seeds for many generations or buy older generations from other farmers at a cheaper price. The fact that all the sampled plots chosen for DNA fingerprinting showed purity percentages of 70 percent or higher is indicative that this might be the case, given the widespread dilution of improved genetic material. Such dispersion of improved genetic material also poses a challenge for the proper identification of the returns to adoption as it confounds the potential benefits of locally adapted hybrids, but also the benefits of traditional local varieties that may be better suited for certain agro-ecological conditions and for contexts of low-input use.  
 
 Our findings are in line with prior research. \cite{Bird2020-nt} propose a theoretical model where the authors compare retained local traditional varieties with improved non-locally adapted varieties and locally adapted improved varieties. The authors postulate that while profits of both types of improved varieties increase with fertilizer application, profits of traditional varieties would decrease with fertilizer application, implying the existence of a threshold of fertilizer application below which it is more profitable to keep using traditional varieties. Non-locally adapted varieties are less profitable without complementary fertilizer application. Depending on how responsive to fertilizer both improved varieties are and on the costs of seeds, there may be a threshold of fertilizer application below which it is more profitable to use the locally adapted variety than the improved non-adapted one. \par
 
 It is possible that similar dynamics explain the patterns showcased in our results. The evidence is consistent in that newly bred varieties do offer higher performance than traditional varieties, but such higher-yielding effects diminish over time, as newer generations of the improved seeds continue to be used. In contrast, traditional local varieties are well-adapted to the local agro-ecological conditions, and their reproduction over multiple generations shows consistent yields, assuming normal weather conditions. Depending on the specific improved varieties and the speed at which high-yielding effects diminish over time, there may be a threshold in time above which it may be more profitable to use a traditional variety than an improved one that has been around for too many generations. After such a threshold is reached, because improved varieties are more dependent on external inputs, the costs of the older-generation improved seeds, together with the costs of fertilizers and other inputs may not compensate the yield returns of an older-improved variety. \par
 
-Our results have far-reaching policy implications. The adoption and impact of genetically improved seeds are inherently heterogeneous. Our methodology incorporates this from the outset. Our findings highlight the wide distribution of the yield returns to adoption, partially explained by the low purchase of newly bred hybrids and the high dispersion of diluted improved genetic material over time. This points to the need for making policies oriented towards increasing the adoption of improved seeds and yields more inclusive, aiming at ensuring that improved varieties are not only available to purchase locally but also affordably. It is important to consider that improved varieties should also be locally adapted to specific agro-ecological conditions, such that their success is less dependent on external chemical inputs. Our findings also shed light on the need to better understand adaptation strategies when the conditions needed for the successful performance of improved seeds are lacking. These contexts include but are not limited to places subject to high weather variability or where low soil fertility is prevalent due to the use of excessive intensification and chemical input dependence. Resilience enhancing strategies such as the use of drought-tolerant maize or irrigation use may be critical for such contexts, but their suitability for the heterogeneous pool of farmers needs to be better understood. 
+Our results have far-reaching policy implications. The adoption and impact of genetically improved seeds are inherently heterogeneous. Our methodology incorporates this from the outset. Our findings highlight the wide distribution of the yield returns to adoption, partially explained by the low purchase of newly bred hybrids and the high dispersion of diluted improved genetic material over time. This points to the need for making policies oriented towards increasing the adoption of improved seeds and yields more inclusive, aiming at ensuring that improved varieties are not only available to purchase locally but also affordably. It is important to consider that improved varieties should also be locally adapted to specific agro-ecological conditions, such that their success is less dependent on external chemical inputs. Our findings also shed light on the need to better understand adaptation strategies when the conditions needed for the successful performance of improved seeds are lacking. These contexts include but are not limited to places subject to high weather variability or where low soil fertility is prevalent due to the use of excessive intensification and chemical input dependence. Resilience-enhancing strategies such as the use of drought-tolerant maize or irrigation use may be critical for such contexts, but their suitability for the heterogeneous pool of farmers needs to be better understood. 
 
 
 %allowing us to investigate whether synergies between seed adoption and water conservation strategies interact; a key component to understanding how investment into such projects translates to economic returns. Moreover, our research informs on not only the adoption but also dis-adoption decisions of technologies as well. In this sense, we provide valuable information to policymakers on how to better target seed marketing or infrastructure to help agricultural households improve their livelihoods
