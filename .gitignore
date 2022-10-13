@@ -1,2 +1,11 @@
 *.dta
 .DS_Store
+*.code-workspace
+*.aux
+*.bbl
+*.blg
+*.fls
+*.log
+*.synctex*
+*.fdb_latexmk
+.Rhistory

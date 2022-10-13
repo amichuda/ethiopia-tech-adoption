@@ -160,7 +160,12 @@ foreach var of varlist YIELD_cropcutfresh_tr YIELD_cropcutdry_tr YIELD_selfr_tr 
     gen ln_`var' = ln(`var')
 }
 
-loc controls = "yrseduc age_head sex_head  title parcesizeHA hhlabor hiredlabor"
+// Let's make missing in fertilizer just 0
+ replace dchfertilizer = 0 if missing(dchfertilizer)
+ replace dorganicfert = 0 if missing(dorganicfert)
+ replace fertcosts = 0 if missing(fertcosts)
+
+loc controls = "yrseduc age_head sex_head  title parcesizeHA hhlabor hiredlabor anntot_avg"
 loc interactions = "1.impmaize#c.(`controls')"
 
 
@@ -176,23 +181,7 @@ forval i=1/7 {
 
 local coeflabels `coeflabels' 8.trajectory#1.impmaize "$\kappa_{111}$"
 
-
 foreach var of varlist YIELD_selfr_tr YIELD_cropcutdry_tr{
-
-	if "`var'" == "YIELD_cropcutdry_tr" {
-		matrix define initval = (6, 6,6,6,6, 6,6,5,-1,1,-1,2,3,5,7,4,3,3)
-		
-		gmm     	(ln_`var' - {mu: i($noalways).trajectory} ///              	
-					- {Delta}*(1.impmaize)  /// 
-					- {phi}*(`switcherpars')            ///
-					- ({mu_always} + {phi}*({mu_always}                     ///
-					- {mu:2.trajectory}))*($always.trajectory#1.impmaize) -{xb: `controls'})    ///
-					, instruments(i($noalways).trajectory 1.impmaize         ///
-					i($switchers $always).trajectory#1.impmaize `controls' , nocons)     ///
-					vce(cluster household_id)  winitial(identity) from(initval) 
-		estimates store theta_model
-
-	}
 
 
 	local i = `i' + 1
@@ -211,13 +200,30 @@ foreach var of varlist YIELD_selfr_tr YIELD_cropcutdry_tr{
 	estadd local controls "Yes" : grc_`short_var_name'_controls
 	estadd local interacted = "No" : grc_`short_var_name'_controls
 
+		if "`var'" == "YIELD_cropcutdry_tr" {
+		mat b = e(b)
+		mat initval = b[1,2...]
+		mat initval = initval[1,1..7] , (0.05,-0.25) , initval[1,14], initval[1,15...] 
+		
+		gmm     	(ln_`var' - {mu:  1.trajectory 2.trajectory 3.trajectory 4.trajectory 5.trajectory 6.trajectory 7.trajectory} ///            	
+					- {Delta}*(1.impmaize)  /// 
+					- {phi}*(`switcherpars')            /// 
+					- ({mu_always} + {phi}*({mu_always}                     /// 
+					- {mu:2.trajectory}))*(8.trajectory#1.impmaize) -{xb: `controls'})    ///
+					, instruments( 1.trajectory 2.trajectory 3.trajectory 4.trajectory 5.trajectory 6.trajectory 7.trajectory 1.impmaize         ///
+					i($switchers $always).trajectory#1.impmaize `controls' , nocons)     ///
+					vce(cluster household_id) from(initval)
+		estimates store theta_model
+
+	}
+
 	grc_weak_id_inference ln_`var', h(impmaize) min(-10) max(10) inc(0.01) hhid(household_id) test("base") base(2) controls(`controls' `interactions') progress(1) store(grc_`short_var_name'_controls_int)
 	mat grc_`short_var_name'_mat_controls_int = real(r(min_phi23)),real(r(max_phi23)) \ real(r(min_phi24)),real(r(max_phi24)) \ real(r(min_phi25)),real(r(max_phi25)) \ real(r(min_phi26)),real(r(max_phi26)) \ real(r(min_phi27)),real(r(max_phi27)) \ real(r(min_phi_joint)),real(r(max_phi_joint))
 
 	estadd local controls "Yes" : grc_`short_var_name'_controls_int
 	estadd local interacted = "Yes" : grc_`short_var_name'_controls_int
 
-	mat grc_mat_`short_var_name' = grc_`short_var_name'_mat, grc_`short_var_name'_mat_controls, grc_`short_var_name'_mat_controls_int
+	mat grc_mat_`short_var_name' = grc_`short_var_name'_mat, grc_`short_var_name'_mat_controls , grc_`short_var_name'_mat_controls_int
 
 }
 
@@ -233,7 +239,7 @@ egen num_adoption = sum(impmaize), by(household_id holder_id)
 global          never 1
 tab             num_adoption
 
-global          always 4
+global          always 3
 global          lastswitcher = 3
 
 numlist         "1(1)$lastswitcher"
@@ -246,11 +252,17 @@ global          noalways `r(numlist)'
 	needed to identify \phi. */
 local           switcherpars ({mu:2.num_adoption} - ///
 					{mu:1.num_adoption})*(2.num_adoption#1.impmaize)
+loc controls = "yrseduc age_head sex_head  title parcesizeHA hhlabor hiredlabor"
 
 foreach var of varlist YIELD_cropcutdry_tr  {
 
-	matrix define initval = (6.3,6.1,6.2, 0.1,0.2,0.3,0.1, 4,4,4,4,4,4,4)
-	
+		reg ln_`var' ib3.num_adoption i($switchers $always).num_adoption#1.impmaize `controls', nocons vce(cluster household_id)
+
+		/* mat b = e(b)
+		mat initval = b[1,1..3], (0.5, -0.25), b[1, 5..7], b[1,9...] */
+		matrix define initval = (6.3,6.1,6.2, 0.1,0.2,0.3,0.1, 4,4,4,4,4,4,4)
+
+			
 		gmm     	(ln_`var' - {mu: ib3.num_adoption} ///              	
 					- {Delta}*(1.impmaize)  /// 
 					- {phi}*(`switcherpars')            ///
