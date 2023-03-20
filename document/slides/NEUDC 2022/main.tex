@@ -2,7 +2,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage{threeparttable}
 %\usepackage{utopia} %font utopia imported
-
 \usepackage{amsthm, booktabs, setspace, natbib, amsfonts,amssymb,epstopdf,textcomp,listings, xcolor}
 
 \usepackage{adjustbox} % Shrink stuff
@@ -67,9 +66,9 @@
 Comparative Advantage of Adoption in Ethiopia}
 
 
-\author[et al]{Aleksandr Michuda\inst{1} \and Cristina Chiarella\inst{2} \and Oscar Barriga-Cabanillas\inst{3} \and Juan Correa\inst{4}}
+\author[]{Aleksandr Michuda\inst{1} \and Cristina Chiarella\inst{2} \and Oscar Barriga-Cabanillas\inst{3} \and Juan Correa\inst{4}}
 
-\institute{\inst{1} Cornell University \and \inst{2} UCLouvain \and \inst{3} World Bank Corp. \and \inst{4} FAO}
+\institute[]{\inst{1} Cornell University \and \inst{2} UCLouvain \and \inst{3} World Bank Corp. \and \inst{4} FAO}
 
 % \institute[UC Davis] % (optional)
 % {
@@ -161,13 +160,13 @@ Food security is a major challenge: Ethiopia is no exception
     \item Breakthroughs in maize germplasm ($\uparrow$ yields, $\uparrow$ drought tolerance)
 \end{itemize}
 
-However adoption of improved seed has remained a challenge
+However adoption of improved seed has remained a challenge:
 
 \begin{enumerate}[ {[}1{]} ]
-    \item Market integration
-    \item Access to supplementary inputs
-    \item Agro-ecological considerations 
-    \item Lack of learning \citep{Conley2010-ue}
+    \item Lack of market integration \citep{Carter2014-fm, adejobi2013markets}
+    \item Access to supplementary inputs \citep{Byerlee2013-qk, Munshi2004-og}
+    \item Adaptation to agro-ecological conditions \citep{Bird2020-nt}
+    \item Tech. Transfer Challenges of learning \citep{Conley2010-ue}
 \end{enumerate}
 
 \end{frame}
@@ -180,10 +179,11 @@ However adoption of improved seed has remained a challenge
 \begin{frame}{Preview of Results}
 
 \begin{enumerate}[ {[}1{]} ]
-    \item Explore heterogeneous comparative advantages through GRC: find puzzling results.
+    \item Explore heterogeneous comparative advantages through GRrC (reformulation of \cite{Suri2011-oi}): find puzzling results.
     \item Endogenous switching regression with different definitions of improved seeds: self-reported, second generation or recycled, purity of genetic material, year of release, types and source.
-    \item Low adoption of newest and purest varieties, which do return in higher yields. 
-    \item When we account for misclassification in GRC, the puzzle is resolved
+    \item Low adoption of newest and purest varieties, which \textit{in fact} return higher yields. 
+    \item Due to genetic dilution, all farmers are using improved seed; biasing results
+    \item When we account for misclassification in GRrC, the puzzle is resolved
 \end{enumerate}
 \end{frame}
 
@@ -198,8 +198,7 @@ However adoption of improved seed has remained a challenge
     \item Waves 1-3 were a panel and included information on yields, inputs and hybrid maize adoption
     \item Wave 4 is a break from Waves 1-3, but contains similar information $+$ DNA fingerprinting
     \item We focus on maize producing households 
-    \item Self-reported use of improved seed varieties
-    \item Self-reported yields
+    \item Self-reported use of improved seed varieties and yields
 \end{itemize}
 
 \begin{figure}
@@ -215,22 +214,20 @@ However adoption of improved seed has remained a challenge
 \begin{figure}
     \centering
     \includegraphics[width=.7\textwidth]{results/figures/adoption_r4.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \caption{Seed varieties: Adoption rate of improved seed varieties in 2018 (by self-report, purity level, crop type, source and year of release)}
 \end{figure}
     
 \end{frame}
 
 %---------------------------------------------------------
 \begin{frame}
-\frametitle{Empirical Strategy I: Finding the returns from adoption}
+\frametitle{Empirical Strategy}
 
 \textbf{Understand the returns of adopting improved varieties: }
 \begin{itemize}
     \item Some farmers are ``more suited'' for adoption (comparative advantage) \citep{Suri2011-oi}
     \item How comparative advantage plays a role on using improved seed varieties and its returns.
-    \item Use Group Random Coefficient (GrRC) method \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc}
-    \item Can separate returns from those who ``should'' be getting highest returns.
+    \item Use Group Random Coefficient (GrRC) method \citep{Tjernstrom_Emilia_Dalia_Ghanem_Oscar_Barriga_Cabanillas_Travis_J_Lybbert_Jeffrey_D_Michler_and_Aleksandr_Michuda2020-bc} to  separate returns from those who ``should'' be getting highest returns.
 \end{itemize}  
 
 % (Suri 2011; Tjernstr\"{o}m et al. 2020; Michler et al. 2019; Barriga et al. 2018)
@@ -250,20 +247,23 @@ $$
 \begin{frame}
 \frametitle{Empirical Strategy}
 \begin{enumerate}
-    \item Identification does not rely on an IV or propensity to adopt.
+    \item Identification does not require IV
     \item Identification similar to \cite{Chamberlain1984-uk}: strict exogeneity
-    \item strong assumption, but gives us ability to estimate returns to adoption, as well as \textit{advantage in adopting}
+    \item Strong assumption, but gives us ability to estimate returns to adoption, as well as \textit{advantage in adopting}
     \item Requires enough variation in ``switcher trajectories'' 
 \end{enumerate}
+\end{frame}
 
+\begin{frame}{Trajectories}
 \input{results/tables/traj}
+
 \end{frame}
 
 
 %---------------------------------------------------------
 %---------------------------------------------------------
 \begin{frame}
-\frametitle{The Puzzle}
+\frametitle{The Puzzle: Using high yield varieties does not improved returns}
 % \frametitle{Group Random Coefficients Results}
 
 \begin{figure}
@@ -289,10 +289,10 @@ $$
 
 \begin{frame}{How do we resolve this puzzle?}
 \begin{itemize}
-    \item Explore 4th wave
-    \item We use the DNA-fingerprinting to shed light on this puzzle
-    \item DNA allows us to assess what varieties (and purity) farmers are using, 
-    \item We implement an endogenous switching regression approach
+    \item Use the  4th wave of the survey to leverage DNA-fingerprinting information 
+    \item DNA allows us to assess what varieties (and purity) farmers are in reality planting  
+    \item We implement an endogenous switching regression approach to properly measure yield return 
+    \item Assess the genetic purity of improved varieties, year of release, types and sources
 \end{itemize}
 
 
@@ -400,7 +400,7 @@ Negative and small returns to adoption from self-reported improved varieties.
 
 Could misclassification be masking returns heterogeneity?
 \begin{itemize}
-    \item If farmers using some mix of traditional hybrid maize or using incorrect practices, this would attenuate effects
+    \item If farmers using genetically diluted hybrid, or older generations, this would attenuate effects
     \item Trajectories would be misclassified.
 \end{itemize}
 
@@ -408,13 +408,13 @@ Could misclassification be masking returns heterogeneity?
 
 \begin{frame}{Misclassification Driving Returns?}
 \begin{itemize}
-    \item Use a misclassification robust variant of GRC
-    \item Maximum likelihood estimation that uses misclassification rates in estimation, inspired by \cite{michuda2021three}
-    \item Use Wave 4 misclassification rates for Waves 1-3
+    \item We estimate a misclassification robust GRrC 
+    \item A Maximum likelihood estimation approach uses misclassification rates to properly estimate coefficients on the returns from adoption of high yield varieties $-$inspired by \cite{michuda2021three}
+    \item We apply wave 4 misclassification rates for waves 1-3
 \end{itemize}
 
 \begin{equation*}
-\label{eq:mr-grc}
+\label{eq:mr-GRrC}
 l(\mu, \kappa, \Delta, \beta, \sigma|y_{t}, \hat{h}) = \sum_{\underbar{$h$}\in\mathcal{H}} \left[ f_{Y_{t}| \mathcal{H}}(y|h=\underbar{$h$})\cdot  \sum_{\bar{h} \in \mathcal{H}} \boldsymbol{1\{\hat{h}=\bar{h}\} p_{\underbar{$h$}, \bar{h}}} \right]
 \end{equation*}
 
@@ -423,9 +423,9 @@ l(\mu, \kappa, \Delta, \beta, \sigma|y_{t}, \hat{h}) = \sum_{\underbar{$h$}\in\m
 \begin{frame}{Misclassification Rates from Wave 4}
 
 \begin{itemize}
-    \item Use rate of reported hybrid of at least 95\% purity, against genetic fingerprinting to calculate misclassification
-    \item Farmer who reports using traditional seed actually using hybrid 14\% of the time
-    \item Farmer who reports using hybrid seed is actually using traditional seed almost \textit{30\%} of the time.
+    \item Use rate of hybrid of at least 95\% purity, against self-reported hybrid use to calculate misclassification
+    \item A farmer who reports using traditional seed is actually using hybrid 14\% of the time
+    \item A farmer who reports using hybrid seed is actually using traditional seed almost \textit{30\%} of the time.
 \end{itemize}
     \begin{table}[]
         \centering
@@ -437,6 +437,7 @@ l(\mu, \kappa, \Delta, \beta, \sigma|y_{t}, \hat{h}) = \sum_{\underbar{$h$}\in\m
         1 & 0.296 & 0.704 \\
         \bottomrule
         \end{tabular}
+        \caption{Misclassification Matrix of 95\% genetic purity}
     \end{table}
     
 \begin{equation}
@@ -448,7 +449,7 @@ l(\mu, \kappa, \Delta, \beta, \sigma|y_{t}, \hat{h}) = \sum_{\underbar{$h$}\in\m
 
 
 
-\begin{frame}{Misclassified GRC Results}
+\begin{frame}{Misclassified GRrC Results}
 
 \begin{figure}
     \centering
@@ -461,8 +462,9 @@ l(\mu, \kappa, \Delta, \beta, \sigma|y_{t}, \hat{h}) = \sum_{\underbar{$h$}\in\m
 Accounting for misclassification resolves the issue and makes the adoption problem the classic story about access and a lack of profitability.
 
 \begin{itemize}
-    \item Misclassification may work through a measurement problem, but also through changes in practices
-    \item Mismatch between cultivation practices and seed used
+    \item Farmers think they're adopting improved seed varieties but evidence shows considerable dilution and varieties are not yielding as expected
+    \item Misclassification biases estimates through measurement problem, but also through changes in practices
+    \item Mismatch between cultivation practices and seed variety used
     \item Effects of high-yielding varieties diminish over time, but traditional varieties are well adapted to local agro-ecological conditions.
     \begin{itemize}
     \item There may be a threshold in time above which it may be more profitable to use a traditional variety than an improved one that has been around for too many generations.
@@ -473,7 +475,7 @@ Accounting for misclassification resolves the issue and makes the adoption probl
 \end{frame}
 
 \begin{frame}
-Thank you!
+\textbf{Thank you!}
 
 \begin{itemize}
     \item I would be happy to discuss any questions and please feel free to email me!

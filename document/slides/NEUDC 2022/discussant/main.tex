@@ -1,0 +1,204 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{threeparttable}
+%\usepackage{utopia} %font utopia imported
+
+\usepackage{amsthm, booktabs, setspace, natbib, amsfonts,amssymb,epstopdf,textcomp,listings, xcolor}
+
+\usepackage{adjustbox} % Shrink stuff
+\usepackage{pgfpages}
+
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\setbeamertemplate{note page}{\pagecolor{yellow!5}\insertnote}
+\usetikzlibrary{positioning}
+\usetikzlibrary{snakes}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{matrix,shapes,arrows,fit,tikzmark}
+
+\usepackage{amsmath}
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{multimedia}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{dcolumn}
+\usepackage{bbm}
+\usepackage[space]{grffile}
+\usepackage{tabularx}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{multirow}
+
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{lscape}
+\usepackage{mdframed}
+\usepackage{mathtools}
+\usepackage{array}
+
+\usepackage{mwe}
+\usepackage[skip=2pt,font=scriptsize]{caption}
+\captionsetup{labelfont=bf, format=hang, labelsep=period, labelformat = empty}
+%labelformat  =simple
+%labelformat = empty
+
+\usepackage{appendixnumberbeamer} %for avoid counting appendix slides add \appendix
+\usepackage{colortbl}
+\usepackage{xcolor}
+
+%\usetheme{Warsaw}
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{natbib}
+\bibliographystyle{unsrtnat}
+
+
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title{Discussing: "Seeding the Seeds: Role of Social Structure in
+Agricultural Technology Diffusion"}
+
+
+\author[et al]{Alain de Janvry, Manaswini Rao, Elisabeth Sadoulet}
+
+
+% \institute[UC Davis] % (optional)
+% {
+% %  \inst{1}%
+%   Agricultural and Resource Economics\\
+%   UC Davis
+%  }
+
+\date[November 2022] % (optional)
+{Discussant:\\
+Aleksandr Michuda}
+
+
+%End of title page configuration block
+%------------------------------------------------------------
+
+
+
+%------------------------------------------------------------
+%The next block of commands puts the table of contents at the 
+%beginning of each section and highlights the current section:
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+%------------------------------------------------------------
+
+
+\begin{document}
+
+\setbeamertemplate{enumerate items}[square]
+\setbeamercolor{item projected}{bg=none,fg=black}
+
+%\setbeamercolor{enumerate items}{〈key=value〉 list} to
+%\setbeamercolor{item projected}{bg=none,fg=beamer@blendedblue}
+
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{itemize item}{fg=black}
+\setbeamercolor{itemize subitem}{fg=black}
+
+%%% TIKZ STUFF
+\tikzset{   
+        every picture/.style={remember picture,baseline},
+        every node/.style={anchor=base,align=center,outer sep=1.5pt},
+        every path/.style={thick},
+        }
+\newcommand\marktopleft[1]{%
+    \tikz[overlay,remember picture] 
+        \node (marker-#1-a) at (-.3em,.3em) {};%
+}
+\newcommand\markbottomright[2]{%
+    \tikz[overlay,remember picture] 
+        \node (marker-#1-b) at (0em,0em) {};%
+}
+\tikzstyle{every picture}+=[remember picture] 
+\tikzstyle{mybox} =[draw=black, very thick, rectangle, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[draw=black,fill=red, text=white]
+%%%% END TIKZ STUFF
+
+
+
+%The next statement creates the title page.
+\frame{\titlepage}
+
+% %---------------------------------------------------------
+% %This block of code is for the table of contents after
+% %the title page
+% \begin{frame}
+% \frametitle{Table of Contents}
+% \tableofcontents
+% \end{frame}
+% %---------------------------------------------------------
+
+
+
+
+%---------------------------------------------------------
+\begin{frame}{Short Summary}
+    \begin{itemize}
+        \item Returning to the site of two-staged randomized experiment in Emerick et al. (2016)
+        \item Introduction of flood resistant paddy variety 
+        \item Evaluating diffusion of seed from treatment to non-treatment households
+        \item Dynamic treatment effects mask heterogeneity found across jati (sub-castes) in regions
+        \item Less village-level fractionalization of jati leads to higher levels of diffusion and adoption by non-treatment households
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Highlights}
+    \begin{itemize}
+        \item Compelling story; just as important to look at spillovers as for treatment, itself
+        \item Merges two interesting literatures: seed tech. adoption and economics of Indian caste
+        \item has clear policy implications for future policy 
+        interventions 
+        \item In particular, social hierarchy results are very interesting!
+    \end{itemize}    
+\end{frame}
+
+\begin{frame}{Feedback}
+    \begin{itemize}
+        \item Regression of Flood x Treatment unclear for untreated households
+            \begin{itemize}
+                \item Being in more flood-prone areas will increase rate of adoption?
+                \item perhaps using lagged treatment would do better?
+            \end{itemize}
+        \item Why use an indicator for ELF, and not the continuous variable?
+        \item In many cases, for a particular year, adoption and area cultivated increases with similar jati rank, or having someone from your jati receive the mini-kit, but the seed source outcome stays insignificant or is only significant in 2015
+            \begin{itemize}
+                \item The argument in the paper is that this diffusion happens through one's network, however, the lack of results from seed source makes me want a story about mechanisms. How are these seeds being used if not through seed exchange?
+                \item If seed is readily available, is this story more about ``information'' exchange than the physical seed?
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Feedback}
+
+\begin{itemize}
+    \item How often does a treated village also get treated with a flood?
+    \item In some cases, I'm inclined to think that the paper might be have power challenges, and whether it might be useful to have a continuous flood measure? Villages that might not have full-on floods, but that are close and observe floods might also be more likely to adopt
+\end{itemize}
+
+\textbf{Minor Feedback}
+    \begin{itemize}
+        \item Why not make all tables into figures as you have for other regressions?
+    \end{itemize}
+\end{frame}
+
+
+\bibliography{references}
+
+\end{document}
